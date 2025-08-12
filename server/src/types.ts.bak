@@ -1,0 +1,88 @@
+import { Room, Booking, Report } from './entities';
+import { GraphQLResolveInfo, GraphQLScalarType } from 'graphql';
+import { BaseContext } from '@apollo/server';
+import { BaseContext } from '@apollo/server';
+
+export interface RevenueStats {
+    totalRevenue: number;
+    averageDaily: number;
+    monthlyBreakdown: { month: string; revenue: number }[];
+}
+
+export interface RoomInput {
+    number: string;
+    type: string;
+    status: string;
+    price: number;
+}
+
+export interface BookingInput {
+    roomId: string;
+    guestName: string;
+    checkIn: string;
+    checkOut: string;
+    status: string;
+}
+
+export interface ReportInput {
+    title: string;
+    type: string;
+    data: any;
+    summary: string;
+}
+
+export interface GenerateReportInput extends ReportInput {
+    period?: string;
+}
+
+export interface ScheduleReportInput extends ReportInput {
+    schedule: string;
+    recipients: string[];
+}
+
+export interface Context extends BaseContext {
+    // Add any custom context properties here
+}
+
+type ResolverFn<TResult, TParent, TArgs> = (
+    parent: TParent,
+    args: TArgs,
+    context: Context,
+    info: GraphQLResolveInfo,
+) => Promise<TResult> | TResult;
+
+interface ResolverTypeWrapper<T> {
+    [key: string]: ResolverFn<T, any, any>;
+}
+
+interface QueryResolvers {
+    [key: string]: BaseResolver<any, any, Context, any>;
+    rooms: BaseResolver<Room[], any, Context, {}>;
+    room: BaseResolver<Room | null, any, Context, { id: string }>;
+    bookings: BaseResolver<Booking[], any, Context, {}>;
+    booking: BaseResolver<Booking | null, any, Context, { id: string }>;
+    reports: BaseResolver<Report[], any, Context, {}>;
+    report: BaseResolver<Report | null, any, Context, { id: string }>;
+    revenueStats: BaseResolver<RevenueStats, any, Context, { year: number }>;
+}
+
+interface MutationResolvers {
+    [key: string]: BaseResolver<any, any, Context, any>;
+    createRoom: BaseResolver<Room, any, Context, { input: RoomInput }>;
+    updateRoom: BaseResolver<Room | null, any, Context, { id: string; input: Partial<RoomInput> }>;
+    deleteRoom: BaseResolver<boolean, any, Context, { id: string }>;
+    createBooking: BaseResolver<Booking, any, Context, { input: BookingInput }>;
+    updateBooking: BaseResolver<Booking | null, any, Context, { id: string; input: Partial<BookingInput> }>;
+    deleteBooking: BaseResolver<boolean, any, Context, { id: string }>;
+    cancelBooking: BaseResolver<boolean, any, Context, { id: string }>;
+    createReport: BaseResolver<Report, any, Context, { input: ReportInput }>;
+    generateReport: BaseResolver<Report, any, Context, { input: GenerateReportInput }>;
+    scheduleReport: BaseResolver<Report, any, Context, { input: ScheduleReportInput }>;
+}
+
+export type Resolvers = {
+    [key: string]: BaseResolver<any, any, Context, any> | GraphQLScalarType | { [key: string]: any };
+    Query: QueryResolvers;
+    Mutation: MutationResolvers;
+    JSON: GraphQLScalarType;
+};

@@ -1,0 +1,411 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Room {
+  id                String             @id @default(uuid())
+  number            String             @unique
+  type              RoomType
+  status            RoomStatus
+  price             Float
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  bookings          Booking[]
+  housekeepingTasks HousekeepingTask[]
+
+  @@index([status])
+  @@index([type])
+}
+
+model Booking {
+  id        String        @id @default(uuid())
+  roomId    String
+  guestName String
+  checkIn   DateTime
+  checkOut  DateTime
+  status    BookingStatus
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  guestId   String?
+  guest     Guest?        @relation(fields: [guestId], references: [id])
+  room      Room          @relation(fields: [roomId], references: [id])
+  invoice   Invoice?
+  payments  Payment[]
+
+  @@index([status])
+  @@index([checkIn])
+  @@index([checkOut])
+  @@index([guestId])
+}
+
+model Report {
+  id         String    @id @default(uuid())
+  title      String
+  type       String
+  data       Json
+  summary    String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  schedule   String?
+  recipients String[]
+  lastRun    DateTime?
+}
+
+model HousekeepingTask {
+  id            String                 @id @default(uuid())
+  roomId        String
+  taskType      HousekeepingTaskType
+  status        HousekeepingTaskStatus @default(PENDING)
+  assignedTo    String?
+  priority      Priority               @default(MEDIUM)
+  estimatedTime Int
+  actualTime    Int?
+  notes         String?
+  createdAt     DateTime               @default(now())
+  updatedAt     DateTime               @updatedAt
+  completedAt   DateTime?
+  room          Room                   @relation(fields: [roomId], references: [id])
+
+  @@index([status])
+  @@index([assignedTo])
+  @@index([priority])
+  @@index([createdAt])
+}
+
+model User {
+  id                   String                @id @default(uuid())
+  email                String                @unique
+  password             String
+  firstName            String
+  lastName             String
+  role                 UserRole              @default(FRONT_DESK)
+  status               UserStatus            @default(ACTIVE)
+  lastLogin            DateTime?
+  resetToken           String?
+  resetTokenExpiry     DateTime?
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  createdBy            String?
+  updatedBy            String?
+  sessions             Session[]
+  notificationSettings NotificationSettings?
+  userPreferences      UserPreferences?
+  scheduledReports     ScheduledReport[]
+  systemBackups        SystemBackup[]
+
+  @@index([email])
+  @@index([role])
+  @@index([status])
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  ipAddress String?
+  userAgent String?
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([token])
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model Guest {
+  id          String    @id @default(uuid())
+  firstName   String
+  lastName    String
+  email       String    @unique
+  phone       String?
+  address     String?
+  dateOfBirth DateTime?
+  nationality String?
+  idNumber    String?
+  isVip       Boolean   @default(false)
+  preferences Json?
+  notes       String?
+  totalStays  Int       @default(0)
+  totalSpent  Float     @default(0)
+  lastStay    DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  bookings    Booking[]
+  invoices    Invoice[]
+
+  @@index([email])
+  @@index([isVip])
+}
+
+model Employee {
+  id               String     @id @default(uuid())
+  employeeId       String     @unique
+  firstName        String
+  lastName         String
+  email            String     @unique
+  phone            String?
+  department       String
+  position         String
+  hireDate         DateTime
+  salary           Float?
+  status           UserStatus @default(ACTIVE)
+  supervisor       String?
+  emergencyContact Json?
+  notes            String?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+
+  @@index([employeeId])
+  @@index([department])
+  @@index([status])
+}
+
+model Invoice {
+  id            String        @id @default(uuid())
+  invoiceNumber String        @unique
+  guestId       String?
+  guestName     String
+  guestEmail    String?
+  bookingId     String?       @unique
+  booking       Booking?      @relation(fields: [bookingId], references: [id])
+  items         Json
+  subtotal      Float
+  tax           Float
+  total         Float
+  status        InvoiceStatus @default(PENDING)
+  issueDate     DateTime      @default(now())
+  dueDate       DateTime
+  paidDate      DateTime?
+  paymentMethod String?
+  notes         String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  guest         Guest?        @relation(fields: [guestId], references: [id])
+
+  @@index([invoiceNumber])
+  @@index([status])
+  @@index([dueDate])
+  @@index([guestId])
+}
+
+enum InvoiceStatus {
+  PENDING
+  PAID
+  OVERDUE
+  CANCELLED
+  REFUNDED
+}
+
+model Payment {
+  id        String        @id @default(uuid())
+  bookingId String
+  booking   Booking       @relation(fields: [bookingId], references: [id])
+  amount    Float
+  status    PaymentStatus @default(PENDING)
+  method    PaymentMethod @default(CREDIT_CARD)
+  dueDate   DateTime?
+  paidAt    DateTime?
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@index([status])
+  @@index([dueDate])
+  @@index([bookingId])
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum PaymentMethod {
+  CREDIT_CARD
+  DEBIT_CARD
+  CASH
+  BANK_TRANSFER
+  ONLINE
+}
+
+enum RoomType {
+  SINGLE
+  DOUBLE
+  SUITE
+  DELUXE
+}
+
+enum RoomStatus {
+  AVAILABLE
+  OCCUPIED
+  MAINTENANCE
+  CLEANING
+}
+
+model HotelSettings {
+  id        String   @id @default(uuid())
+  name      String   @default("Grand Hotel")
+  logo      String?
+  tagline   String?
+  address   String?
+  phone     String?
+  email     String?
+  website   String?
+  currency  String   @default("USD")
+  timezone  String   @default("UTC")
+  language  String   @default("en")
+  theme     String   @default("dark")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model NotificationSettings {
+  id                 String   @id @default(uuid())
+  userId             String   @unique
+  user               User     @relation(fields: [userId], references: [id])
+  emailNotifications Boolean  @default(true)
+  pushNotifications  Boolean  @default(false)
+  smsNotifications   Boolean  @default(true)
+  reportSchedule     String   @default("weekly")
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model UserPreferences {
+  id         String   @id @default(uuid())
+  userId     String   @unique
+  user       User     @relation(fields: [userId], references: [id])
+  theme      String   @default("dark")
+  language   String   @default("en")
+  timezone   String   @default("UTC")
+  dateFormat String   @default("MM/dd/yyyy")
+  currency   String   @default("USD")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model EmailTemplate {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  subject   String
+  body      String
+  variables Json?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ScheduledReport {
+  id         String                @id @default(uuid())
+  name       String
+  type       ReportType
+  schedule   String
+  recipients String[]
+  lastRun    DateTime?
+  nextRun    DateTime
+  isActive   Boolean               @default(true)
+  parameters Json?
+  createdBy  String
+  creator    User                  @relation(fields: [createdBy], references: [id])
+  status     ScheduledReportStatus @default(ACTIVE)
+  createdAt  DateTime              @default(now())
+  updatedAt  DateTime              @updatedAt
+
+  @@index([nextRun])
+  @@index([isActive])
+}
+
+model SystemBackup {
+  id          String       @id @default(uuid())
+  filename    String
+  size        BigInt
+  type        BackupType
+  status      BackupStatus @default(RUNNING)
+  createdBy   String
+  creator     User         @relation(fields: [createdBy], references: [id])
+  startedAt   DateTime     @default(now())
+  completedAt DateTime?
+  error       String?
+  path        String
+
+  @@index([status])
+  @@index([createdBy])
+}
+
+enum ReportType {
+  REVENUE
+  OCCUPANCY
+  HOUSEKEEPING
+  GUEST_ANALYTICS
+  FINANCIAL_SUMMARY
+  CUSTOM
+}
+
+enum ScheduledReportStatus {
+  ACTIVE
+  PAUSED
+  ERROR
+  COMPLETED
+}
+
+enum BackupType {
+  FULL
+  INCREMENTAL
+  DATA_ONLY
+}
+
+enum BackupStatus {
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum BookingStatus {
+  CONFIRMED
+  CHECKED_IN
+  CHECKED_OUT
+  CANCELLED
+}
+
+enum HousekeepingTaskType {
+  CLEANING
+  MAINTENANCE
+  INSPECTION
+  REPAIR
+  RESTOCKING
+}
+
+enum HousekeepingTaskStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+  FRONT_DESK
+  HOUSEKEEPING
+  MAINTENANCE
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
