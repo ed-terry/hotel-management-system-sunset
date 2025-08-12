@@ -139,26 +139,26 @@ const NotificationCenter = () => {
   const getNotificationIcon = (type: Notification['type']) => {
     switch (type) {
       case 'urgent':
-        return <ExclamationTriangleIcon className="h-5 w-5 text-red-400" />;
+        return <ExclamationTriangleIcon className="h-5 w-5 text-red-500" />;
       case 'warning':
-        return <ExclamationTriangleIcon className="h-5 w-5 text-yellow-400" />;
+        return <ExclamationTriangleIcon className="h-5 w-5 text-amber-500" />;
       case 'success':
-        return <CheckCircleIcon className="h-5 w-5 text-green-400" />;
+        return <CheckCircleIcon className="h-5 w-5 text-emerald-500" />;
       default:
-        return <ClockIcon className="h-5 w-5 text-blue-400" />;
+        return <ClockIcon className="h-5 w-5 text-blue-500" />;
     }
   };
 
   const getNotificationColor = (type: Notification['type']) => {
     switch (type) {
       case 'urgent':
-        return 'border-l-red-500 bg-red-900/10';
+        return 'border-l-red-500 bg-gradient-to-r from-red-50/80 to-pink-50/60';
       case 'warning':
-        return 'border-l-yellow-500 bg-yellow-900/10';
+        return 'border-l-amber-500 bg-gradient-to-r from-amber-50/80 to-yellow-50/60';
       case 'success':
-        return 'border-l-green-500 bg-green-900/10';
+        return 'border-l-emerald-500 bg-gradient-to-r from-emerald-50/80 to-green-50/60';
       default:
-        return 'border-l-blue-500 bg-blue-900/10';
+        return 'border-l-blue-500 bg-gradient-to-r from-blue-50/80 to-indigo-50/60';
     }
   };
 
@@ -180,11 +180,11 @@ const NotificationCenter = () => {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="relative p-2 text-base-content/70 hover:text-base-content transition-all duration-200 hover:bg-base-200/50 rounded-lg group"
+        className="relative p-2 text-gray-600 hover:text-amber-600 transition-all duration-200 hover:bg-amber-50 rounded-lg group"
       >
         <BellIcon className="h-6 w-6 group-hover:scale-110 transition-transform duration-200" />
         {unreadCount > 0 && (
-          <span className="absolute -top-1 -right-1 bg-gradient-to-r from-red-500 to-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center shadow-lg animate-pulse">
+          <span className="absolute -top-1 -right-1 bg-gradient-to-r from-red-500 to-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center shadow-lg animate-pulse ring-2 ring-red-200">
             {unreadCount > 9 ? '9+' : unreadCount}
           </span>
         )}
@@ -194,30 +194,30 @@ const NotificationCenter = () => {
         <>
           {/* Backdrop */}
           <div
-            className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm"
+            className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm"
             onClick={() => setIsOpen(false)}
           ></div>
 
           {/* Notification Panel */}
-          <div className="absolute right-0 top-full mt-2 w-96 bg-gradient-to-br from-base-200 to-base-300/90 backdrop-blur-md border border-primary/20 rounded-xl shadow-xl z-50 max-h-[32rem] overflow-hidden">
+          <div className="absolute right-0 top-full mt-2 w-96 bg-gradient-to-br from-white via-amber-50/50 to-orange-50/30 backdrop-blur-md border-2 border-amber-200/50 rounded-xl shadow-2xl z-50 max-h-[32rem] overflow-hidden">
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-primary/20 bg-gradient-to-r from-primary/10 to-secondary/10">
-              <h3 className="text-lg font-bold text-base-content flex items-center gap-2">
-                <BellIcon className="h-5 w-5 text-primary" />
+            <div className="flex items-center justify-between p-4 border-b-2 border-amber-200/50 bg-gradient-to-r from-amber-100/50 to-orange-100/30">
+              <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+                <BellIcon className="h-5 w-5 text-amber-600" />
                 Notifications
               </h3>
               <div className="flex items-center gap-2">
                 {unreadCount > 0 && (
                   <button
                     onClick={markAllAsRead}
-                    className="text-sm text-primary hover:text-primary/80 font-medium transition-colors duration-200"
+                    className="text-sm text-amber-600 hover:text-amber-700 font-medium transition-colors duration-200 px-2 py-1 rounded-lg hover:bg-amber-100"
                   >
                     Mark all read
                   </button>
                 )}
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="text-gray-400 hover:text-white"
+                  className="text-gray-400 hover:text-red-500 p-1 rounded-lg hover:bg-red-50 transition-all duration-200"
                 >
                   <XMarkIcon className="h-5 w-5" />
                 </button>
@@ -227,38 +227,36 @@ const NotificationCenter = () => {
             {/* Notifications List */}
             <div className="max-h-80 overflow-y-auto">
               {notifications.length === 0 ? (
-                <div className="p-6 text-center text-gray-400">
-                  <BellIcon className="h-12 w-12 mx-auto mb-3 opacity-50" />
-                  <p>No notifications</p>
+                <div className="p-6 text-center text-gray-500">
+                  <BellIcon className="h-12 w-12 mx-auto mb-3 opacity-50 text-amber-300" />
+                  <p className="font-medium">No notifications</p>
                 </div>
               ) : (
-                <div className="divide-y divide-gray-600">
+                <div className="divide-y divide-amber-200/30">
                   {notifications.map((notification) => (
                     <div
                       key={notification.id}
                       onClick={() => markAsRead(notification.id)}
-                      className={`p-4 cursor-pointer hover:bg-primary transition-colors border-l-4 ${getNotificationColor(
+                      className={`p-4 cursor-pointer hover:bg-amber-50/80 transition-all duration-200 border-l-4 ${getNotificationColor(
                         notification.type
-                      )} ${!notification.read ? 'bg-primary/30' : ''}`}
+                      )} ${!notification.read ? 'bg-amber-50/50 ring-2 ring-amber-200/50' : ''} transform hover:-translate-y-0.5 hover:shadow-lg`}
                     >
                       <div className="flex items-start gap-3">
-                        <div className="flex-shrink-0 mt-0.5">
+                        <div className="flex-shrink-0 mt-0.5 p-1 rounded-lg bg-white/80 shadow-md">
                           {getNotificationIcon(notification.type)}
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between">
-                            <p className="text-sm font-medium text-white truncate">
-                              {notification.title}
-                            </p>
-                            <p className="text-xs text-gray-400 flex-shrink-0 ml-2">
+                            <p className="text-sm font-bold text-gray-800 truncate">{notification.title}</p>
+                            <p className="text-xs text-gray-500 flex-shrink-0 ml-2 font-medium">
                               {formatTimestamp(notification.timestamp)}
                             </p>
                           </div>
-                          <p className="text-sm text-gray-300 mt-1">
+                          <p className="text-sm text-gray-600 mt-1 font-medium">
                             {notification.message}
                           </p>
                           {!notification.read && (
-                            <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+                            <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 animate-pulse shadow-lg"></div>
                           )}
                         </div>
                       </div>

@@ -50,24 +50,24 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gradient-to-r from-base-100 via-base-200/50 to-base-100 backdrop-blur-md border-b border-primary/10 shadow-sm">
+    <nav className="bg-gradient-to-r from-white/95 via-amber-50/80 to-orange-50/70 backdrop-blur-md border-b border-amber-200/30 shadow-lg">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 sm:h-18 lg:h-20 items-center justify-between">
           <div className="flex items-center">
             <div className="flex-shrink-0 flex items-center space-x-2 sm:space-x-3 lg:space-x-4">
-              <div className="p-1 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-lg sm:rounded-xl border border-primary/10">
-                <Logo size={32} className="sm:hidden shadow-sm rounded-md" />
-                <Logo size={40} className="hidden sm:block lg:hidden shadow-sm rounded-lg" />
-                <Logo size={48} className="hidden lg:block shadow-sm rounded-lg" />
+              <div className="p-1 bg-gradient-to-br from-amber-100/50 to-orange-100/50 rounded-lg sm:rounded-xl border border-amber-300/30 shadow-md">
+                <Logo size={32} className="sm:hidden shadow-lg rounded-md" />
+                <Logo size={40} className="hidden sm:block lg:hidden shadow-lg rounded-lg" />
+                <Logo size={48} className="hidden lg:block shadow-lg rounded-lg" />
               </div>
               <div className="hidden sm:block">
-                <h1 className="text-lg sm:text-xl lg:text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                <h1 className="text-lg sm:text-xl lg:text-2xl font-bold bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 bg-clip-text text-transparent drop-shadow-sm">
                   Sunset Hotel
                 </h1>
-                <p className="text-base-content/60 text-xs sm:text-sm font-medium">Management System</p>
+                <p className="text-gray-600/80 text-xs sm:text-sm font-semibold tracking-wide drop-shadow-sm">Management System</p>
               </div>
               <div className="block sm:hidden">
-                <h1 className="text-base font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                <h1 className="text-base font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
                   Sunset
                 </h1>
               </div>
@@ -82,9 +82,9 @@ const Navbar = () => {
                       to={item.href}
                       className={`${
                         isActive(item.href)
-                          ? 'bg-gradient-to-r from-primary/10 to-secondary/10 text-primary border border-primary/20'
-                          : 'text-base-content/70 hover:bg-gradient-to-r hover:from-primary/5 hover:to-secondary/5 hover:text-primary border border-transparent hover:border-primary/10'
-                      } px-3 xl:px-4 py-2 xl:py-2.5 rounded-lg xl:rounded-xl text-xs xl:text-sm font-medium flex items-center space-x-1 xl:space-x-2 transition-all duration-200 shadow-sm`}
+                          ? 'bg-gradient-to-r from-amber-100/80 to-orange-100/80 text-amber-700 border border-amber-300/40 shadow-md'
+                          : 'text-gray-600 hover:bg-gradient-to-r hover:from-amber-50 hover:to-orange-50 hover:text-amber-700 border border-transparent hover:border-amber-200/40 hover:shadow-sm'
+                      } px-3 xl:px-4 py-2 xl:py-2.5 rounded-lg xl:rounded-xl text-xs xl:text-sm font-semibold flex items-center space-x-1 xl:space-x-2 transition-all duration-200 backdrop-blur-sm`}
                     >
                       <Icon className="h-3 w-3 xl:h-4 xl:w-4" />
                       <span className="hidden xl:inline">{item.name}</span>

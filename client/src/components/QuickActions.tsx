@@ -121,7 +121,7 @@ const QuickActions = () => {
       id: 'checkout',
       name: 'Quick Check-out',
       icon: ClockIcon,
-      color: 'bg-blue-600 hover:bg-blue-700',
+      color: 'bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600',
       description: 'Check out a guest and create cleaning task',
       action: () => setIsExpanded(true),
     },
@@ -129,7 +129,7 @@ const QuickActions = () => {
       id: 'clean',
       name: 'Schedule Cleaning',
       icon: SparklesIcon,
-      color: 'bg-green-600 hover:bg-green-700',
+      color: 'bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600',
       description: 'Create a cleaning task for any room',
       action: () => setIsExpanded(true),
     },
@@ -137,7 +137,7 @@ const QuickActions = () => {
       id: 'maintenance',
       name: 'Set Maintenance',
       icon: WrenchScrewdriverIcon,
-      color: 'bg-orange-600 hover:bg-orange-700',
+      color: 'bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600',
       description: 'Put a room in maintenance mode',
       action: () => setIsExpanded(true),
     },
@@ -145,7 +145,7 @@ const QuickActions = () => {
       id: 'booking',
       name: 'Quick Booking',
       icon: CalendarDaysIcon,
-      color: 'bg-blue-600 hover:bg-blue-700',
+      color: 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600',
       description: 'Create a new booking quickly',
       action: () => {
         window.location.href = '/bookings';
@@ -154,10 +154,10 @@ const QuickActions = () => {
   ];
 
   return (
-    <div className="bg-gradient-to-br from-base-200 to-base-300/50 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-primary/20 hover:shadow-xl transition-all duration-200">
-      <h2 className="text-xl font-bold text-base-content mb-6 flex items-center gap-2">
-        <div className="p-2 bg-primary/20 rounded-lg">
-          <CheckCircleIcon className="h-6 w-6 text-primary" />
+    <div className="bg-gradient-to-br from-white via-amber-50/50 to-orange-50/30 backdrop-blur-sm rounded-xl shadow-2xl p-6 border-2 border-amber-200/50 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+      <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+        <div className="p-2 bg-gradient-to-r from-amber-400 to-orange-400 rounded-lg shadow-md">
+          <CheckCircleIcon className="h-6 w-6 text-white" />
         </div>
         Quick Actions
       </h2>
@@ -170,81 +170,81 @@ const QuickActions = () => {
               <button
                 key={action.id}
                 onClick={action.action}
-                className={`group ${action.color} text-white p-6 rounded-xl shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary`}
+                className={`group ${action.color} text-white p-6 rounded-xl shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-amber-300/50 transform hover:-translate-y-1`}
               >
-                <Icon className="h-10 w-10 mx-auto mb-3 group-hover:scale-110 transition-transform duration-200" />
+                <Icon className="h-10 w-10 mx-auto mb-3 group-hover:scale-110 transition-transform duration-200 drop-shadow-lg" />
                 <div className="text-sm font-bold">{action.name}</div>
-                <div className="text-xs text-white/80 mt-2 leading-tight">{action.description}</div>
+                <div className="text-xs text-white/90 mt-2 leading-tight">{action.description}</div>
               </button>
             );
           })}
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-6">
           <div className="flex justify-between items-center">
-            <h3 className="text-lg font-medium text-white">Select Action</h3>
+            <h3 className="text-lg font-bold text-gray-800">Select Action</h3>
             <button
               onClick={() => setIsExpanded(false)}
-              className="text-gray-400 hover:text-white"
+              className="text-gray-400 hover:text-red-500 p-2 rounded-lg hover:bg-red-50 transition-all duration-200"
             >
               ✕
             </button>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-3">
             {/* Check-out Section */}
-            <div className="bg-primary rounded-lg p-4">
-              <h4 className="text-white font-medium mb-3 flex items-center">
+            <div className="bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl p-6 shadow-lg">
+              <h4 className="text-white font-bold mb-4 flex items-center">
                 <ClockIcon className="h-5 w-5 mr-2" />
                 Check-out Rooms
               </h4>
-              <div className="space-y-2 max-h-32 overflow-y-auto">
+              <div className="space-y-3 max-h-32 overflow-y-auto">
                 {occupiedRooms.length > 0 ? (
                   occupiedRooms.map((room) => (
                     <button
                       key={room.id}
                       onClick={() => handleCheckOut(room.id)}
-                      className="w-full text-left px-3 py-2 bg-blue-900/30 hover:bg-blue-900/50 text-blue-200 rounded transition-colors text-sm"
+                      className="w-full text-left px-4 py-3 bg-white/20 hover:bg-white/30 text-white rounded-lg transition-all duration-200 text-sm font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
                     >
                       Room {room.number} ({room.type})
                     </button>
                   ))
                 ) : (
-                  <p className="text-gray-400 text-sm">No occupied rooms</p>
+                  <p className="text-blue-200 text-sm font-medium">No occupied rooms</p>
                 )}
               </div>
             </div>
 
             {/* Cleaning Section */}
-            <div className="bg-primary rounded-lg p-4">
-              <h4 className="text-white font-medium mb-3 flex items-center">
+            <div className="bg-gradient-to-r from-emerald-500 to-green-500 rounded-xl p-6 shadow-lg">
+              <h4 className="text-white font-bold mb-4 flex items-center">
                 <SparklesIcon className="h-5 w-5 mr-2" />
                 Schedule Cleaning
               </h4>
-              <div className="space-y-2 max-h-32 overflow-y-auto">
+              <div className="space-y-3 max-h-32 overflow-y-auto">
                 {availableRooms.length > 0 ? (
                   availableRooms.map((room) => (
                     <button
                       key={room.id}
                       onClick={() => handleQuickClean(room.id)}
-                      className="w-full text-left px-3 py-2 bg-green-900/30 hover:bg-green-900/50 text-green-200 rounded transition-colors text-sm"
+                      className="w-full text-left px-4 py-3 bg-white/20 hover:bg-white/30 text-white rounded-lg transition-all duration-200 text-sm font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
                     >
                       Room {room.number} ({room.type})
                     </button>
                   ))
                 ) : (
-                  <p className="text-gray-400 text-sm">No available rooms</p>
+                  <p className="text-green-200 text-sm font-medium">No available rooms</p>
                 )}
               </div>
             </div>
 
             {/* Maintenance Section */}
-            <div className="bg-primary rounded-lg p-4">
-              <h4 className="text-white font-medium mb-3 flex items-center">
+            <div className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-xl p-6 shadow-lg">
+              <h4 className="text-white font-bold mb-4 flex items-center">
                 <WrenchScrewdriverIcon className="h-5 w-5 mr-2" />
                 Set Maintenance
               </h4>
-              <div className="space-y-2 max-h-32 overflow-y-auto">
+              <div className="space-y-3 max-h-32 overflow-y-auto">
                 {rooms.filter(room => room.status !== 'MAINTENANCE').length > 0 ? (
                   rooms
                     .filter(room => room.status !== 'MAINTENANCE')
@@ -252,13 +252,13 @@ const QuickActions = () => {
                       <button
                         key={room.id}
                         onClick={() => handleMaintenance(room.id)}
-                        className="w-full text-left px-3 py-2 bg-orange-900/30 hover:bg-orange-900/50 text-orange-200 rounded transition-colors text-sm"
+                        className="w-full text-left px-4 py-3 bg-white/20 hover:bg-white/30 text-white rounded-lg transition-all duration-200 text-sm font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
                       >
                         Room {room.number} ({room.status})
                       </button>
                     ))
                 ) : (
-                  <p className="text-gray-400 text-sm">All rooms in maintenance</p>
+                  <p className="text-orange-200 text-sm font-medium">All rooms in maintenance</p>
                 )}
               </div>
             </div>

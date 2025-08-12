@@ -42,15 +42,15 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, onEdit, onView }) => {
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case 'available':
-        return 'bg-success/20 text-success border border-success/30';
+        return 'bg-emerald-100/80 text-emerald-700 border border-emerald-300/50 shadow-emerald-200/50';
       case 'occupied':
-        return 'bg-error/20 text-error border border-error/30';
+        return 'bg-red-100/80 text-red-700 border border-red-300/50 shadow-red-200/50';
       case 'maintenance':
-        return 'bg-warning/20 text-warning border border-warning/30';
+        return 'bg-amber-100/80 text-amber-700 border border-amber-300/50 shadow-amber-200/50';
       case 'cleaning':
-        return 'bg-info/20 text-info border border-info/30';
+        return 'bg-blue-100/80 text-blue-700 border border-blue-300/50 shadow-blue-200/50';
       default:
-        return 'bg-base-300/50 text-base-content/70 border border-base-300';
+        return 'bg-gray-100/80 text-gray-700 border border-gray-300/50 shadow-gray-200/50';
     }
   };
 
@@ -61,31 +61,31 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, onEdit, onView }) => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-base-200 to-base-300/50 backdrop-blur-sm border border-primary/20 rounded-xl shadow-lg p-6 transition-all duration-200 hover:scale-105 hover:shadow-xl group">
+    <div className="bg-gradient-to-br from-white/95 via-amber-50/50 to-orange-50/60 backdrop-blur-md border border-amber-200/40 rounded-xl shadow-xl p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl group ring-2 ring-amber-100/30">
       <div className="flex justify-between items-start mb-6">
         <div>
-          <h3 className="text-xl font-bold text-base-content group-hover:text-primary transition-colors duration-200">
+          <h3 className="text-xl font-bold text-gray-800 group-hover:text-amber-700 transition-colors duration-300 drop-shadow-sm">
             Room {room.number}
           </h3>
-          <p className="text-base-content/70 font-medium mt-1">{formatType(room.type)}</p>
+          <p className="text-gray-600/80 font-semibold mt-1">{formatType(room.type)}</p>
         </div>
-        <span className={`px-3 py-1 text-sm font-bold rounded-full backdrop-blur-sm ${getStatusColor(room.status)} hover:scale-105 transition-transform duration-200`}>
+        <span className={`px-3 py-1 text-sm font-bold rounded-full backdrop-blur-sm shadow-lg hover:scale-105 transition-transform duration-200 ${getStatusColor(room.status)}`}>
           {room.status}
         </span>
       </div>
 
       <div className="mb-6">
-        <p className="text-3xl font-bold text-base-content group-hover:text-primary transition-colors duration-200">
+        <p className="text-3xl font-bold text-gray-800 group-hover:text-amber-700 transition-colors duration-300 drop-shadow-sm">
           ${room.price}
-          <span className="text-base font-medium text-base-content/70 ml-1">/night</span>
+          <span className="text-base font-semibold text-gray-600/80 ml-1">/night</span>
         </p>
       </div>
 
       {room.bookings && room.bookings.length > 0 && (
         <div className="mb-6">
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-            <p className="text-sm text-base-content/80 font-medium">
+            <div className="w-2 h-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full animate-pulse shadow-lg"></div>
+            <p className="text-sm text-gray-700/90 font-semibold">
               {room.bookings.length} active booking{room.bookings.length !== 1 ? 's' : ''}
             </p>
           </div>
@@ -95,24 +95,24 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, onEdit, onView }) => {
       <div className="flex gap-3">
         <button
           onClick={() => onView(room)}
-          className="flex-1 flex items-center justify-center px-4 py-3 bg-base-100/80 backdrop-blur-sm border border-primary/20 hover:border-primary/40 hover:bg-base-100 text-base-content rounded-lg transition-all duration-200 hover:scale-105 group/btn"
+          className="flex-1 flex items-center justify-center px-4 py-3 bg-white/80 backdrop-blur-sm border-2 border-amber-200/50 hover:border-amber-300 hover:bg-white text-gray-700 rounded-lg transition-all duration-200 hover:scale-105 group/btn shadow-md hover:shadow-lg"
           title="View Details"
         >
-          <EyeIcon className="h-4 w-4 mr-2 group-hover/btn:text-primary transition-colors duration-200" />
-          <span className="font-medium">View</span>
+          <EyeIcon className="h-4 w-4 mr-2 group-hover/btn:text-amber-600 transition-colors duration-200" />
+          <span className="font-semibold">View</span>
         </button>
         <button
           onClick={() => onEdit(room)}
-          className="flex-1 flex items-center justify-center px-4 py-3 bg-primary/90 hover:bg-primary text-primary-content rounded-lg transition-all duration-200 hover:scale-105 shadow-md hover:shadow-lg group/btn"
+          className="flex-1 flex items-center justify-center px-4 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-lg transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl group/btn"
           title="Edit Room"
         >
           <PencilIcon className="h-4 w-4 mr-2 group-hover/btn:scale-110 transition-transform duration-200" />
-          <span className="font-medium">Edit</span>
+          <span className="font-semibold">Edit</span>
         </button>
         <button
           onClick={handleDelete}
           disabled={isDeleting}
-          className="flex items-center justify-center px-4 py-3 bg-error/90 hover:bg-error text-error-content rounded-lg transition-all duration-200 hover:scale-105 shadow-md hover:shadow-lg disabled:opacity-50 disabled:hover:scale-100 group/btn"
+          className="flex items-center justify-center px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-lg transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:hover:scale-100 group/btn"
           title="Delete Room"
         >
           <TrashIcon className="h-4 w-4 group-hover/btn:scale-110 transition-transform duration-200" />
