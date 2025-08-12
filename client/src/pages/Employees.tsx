@@ -350,21 +350,21 @@ const Employees = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-base-100 via-base-200/50 to-primary/5">
+    <div className="min-h-screen bg-gradient-to-br from-base-100 via-primary/2 to-secondary/2">
       {/* Modern Header */}
-      <div className="relative bg-gradient-to-r from-primary/20 via-secondary/15 to-accent/10 backdrop-blur-sm border-b border-primary/20">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-secondary/5 opacity-30"></div>
-        <div className="relative container mx-auto px-6 py-8">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="flex items-center space-x-4">
-              <div className="p-3 bg-primary/20 backdrop-blur-sm rounded-xl border border-primary/30">
-                <UserIcon className="h-8 w-8 text-primary" />
+      <div className="relative bg-gradient-to-r from-primary/8 via-secondary/6 to-accent/4 backdrop-blur-sm border-b border-primary/10">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/2 to-secondary/2 opacity-30"></div>
+        <div className="relative container mx-auto px-4 sm:px-6 py-6 sm:py-8 lg:py-10">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 lg:gap-6">
+            <div className="flex items-center space-x-4 lg:space-x-6">
+              <div className="p-3 lg:p-4 bg-gradient-to-br from-primary/10 to-secondary/10 backdrop-blur-sm rounded-xl border border-primary/20 shadow-lg">
+                <IdentificationIcon className="h-8 w-8 lg:h-10 lg:w-10 text-primary" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                   Employee Management
                 </h1>
-                <p className="text-base-content/70 mt-1">Manage your hotel staff and workforce</p>
+                <p className="text-base-content/60 mt-1 sm:mt-2 text-sm sm:text-base lg:text-lg">Manage your hotel staff and workforce</p>
               </div>
             </div>
             <button
@@ -373,50 +373,53 @@ const Employees = () => {
                 resetEmployeeForm();
                 setShowEmployeeForm(true);
               }}
-              className="btn btn-primary shadow-lg hover:shadow-xl transition-all duration-200 group"
+              className="bg-gradient-to-r from-primary to-secondary text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 active:scale-95 group flex items-center space-x-2"
             >
-              <PlusIcon className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
-              Add Employee
+              <PlusIcon className="h-4 w-4 sm:h-5 sm:w-5 group-hover:scale-110 transition-transform duration-200" />
+              <span className="hidden sm:inline">Add Employee</span>
+              <span className="sm:hidden">Add</span>
             </button>
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-6 py-8">
+      <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
 
       {/* Search and Filter */}
-      <div className="bg-base-200 rounded-lg shadow-lg p-4 mb-6">
-        <div className="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-4 md:space-y-0">
+      <div className="bg-base-100/80 backdrop-blur-md rounded-xl shadow-lg border border-primary/10 p-4 sm:p-6 mb-6 lg:mb-8">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:space-x-6 space-y-4 lg:space-y-0">
           <div className="flex-1 relative">
-            <MagnifyingGlassIcon className="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/60" />
+            <MagnifyingGlassIcon className="h-4 w-4 sm:h-5 sm:w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/40" />
             <input
               type="text"
               placeholder="Search employees by name, email, or ID..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-base-100 border-base-300 rounded-md text-base-content focus:ring-2 focus:ring-secondary focus:border-transparent"
+              className="w-full pl-9 sm:pl-10 pr-4 py-2.5 sm:py-3 bg-base-200/50 border border-primary/20 rounded-lg text-base-content placeholder-base-content/40 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/40 transition-all duration-200 text-sm sm:text-base"
             />
           </div>
           
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2">
-              <FunnelIcon className="h-5 w-5 text-base-content/60" />
-              <select
-                value={filterDepartment}
-                onChange={(e) => setFilterDepartment(e.target.value)}
-                className="px-3 py-2 bg-base-100 border-base-300 rounded-md text-base-content focus:ring-2 focus:ring-secondary focus:border-transparent"
-              >
-                <option value="all">All Departments</option>
-                {departments.map(dept => (
-                  <option key={dept} value={dept}>{dept}</option>
-                ))}
-              </select>
+          <div className="flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
+            <div className="flex items-center space-x-2 text-base-content/60">
+              <FunnelIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+              <span className="text-sm font-medium">Filter:</span>
             </div>
+            
+            <select
+              value={filterDepartment}
+              onChange={(e) => setFilterDepartment(e.target.value)}
+              className="px-3 py-2 bg-base-200/50 border border-primary/20 rounded-lg text-base-content focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/40 transition-all duration-200 text-sm"
+            >
+              <option value="all">All Departments</option>
+              {departments.map(dept => (
+                <option key={dept} value={dept}>{dept}</option>
+              ))}
+            </select>
             
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="px-3 py-2 bg-base-100 border-base-300 rounded-md text-base-content focus:ring-2 focus:ring-secondary focus:border-transparent"
+              className="px-3 py-2 bg-base-200/50 border border-primary/20 rounded-lg text-base-content focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/40 transition-all duration-200 text-sm"
             >
               <option value="all">All Status</option>
               <option value="Active">Active</option>
@@ -446,32 +449,34 @@ const Employees = () => {
                     selectedEmployee?.id === employee.id ? 'bg-primary' : ''
                   }`}
                 >
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
                     <div className="flex items-center space-x-3">
-                      <div className="h-10 w-10 bg-secondary rounded-full flex items-center justify-center">
-                        <UserIcon className="h-5 w-5 text-base-content" />
+                      <div className="h-10 w-10 sm:h-12 sm:w-12 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full flex items-center justify-center border border-primary/20">
+                        <UserIcon className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
                       </div>
                       <div>
-                        <h3 className="text-base-content font-medium">
+                        <h3 className="text-base-content font-semibold text-sm sm:text-base">
                           {employee.firstName} {employee.lastName}
                         </h3>
-                        <p className="text-base-content/60 text-sm">{employee.position}</p>
-                        <p className="text-base-content/60 text-xs">{employee.employeeId}</p>
+                        <p className="text-base-content/60 text-xs sm:text-sm">{employee.position}</p>
+                        <p className="text-base-content/40 text-xs">{employee.employeeId}</p>
                       </div>
                     </div>
                     
-                    <div className="flex items-center space-x-2">
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(employee.status)}`}>
-                        {employee.status}
-                      </span>
-                      <span className="text-base-content/60 text-sm">{employee.department}</span>
-                      <div className="flex space-x-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
+                      <div className="flex items-center space-x-2">
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(employee.status)}`}>
+                          {employee.status}
+                        </span>
+                        <span className="text-base-content/60 text-xs sm:text-sm bg-base-200/50 px-2 py-1 rounded-md">{employee.department}</span>
+                      </div>
+                      <div className="flex space-x-1 self-end sm:self-auto">
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
                             handleEditEmployee(employee);
                           }}
-                          className="p-1 text-base-content/60 hover:text-secondary transition-colors"
+                          className="p-2 text-base-content/60 hover:text-primary hover:bg-primary/5 rounded-lg transition-all duration-200 border border-transparent hover:border-primary/20"
                         >
                           <PencilIcon className="h-4 w-4" />
                         </button>
@@ -480,7 +485,7 @@ const Employees = () => {
                             e.stopPropagation();
                             handleDeleteEmployee(employee.id);
                           }}
-                          className="p-1 text-base-content/60 hover:text-red-400 transition-colors"
+                          className="p-2 text-base-content/60 hover:text-error hover:bg-error/5 rounded-lg transition-all duration-200 border border-transparent hover:border-error/20"
                         >
                           <TrashIcon className="h-4 w-4" />
                         </button>
@@ -491,9 +496,10 @@ const Employees = () => {
               ))}
               
               {filteredEmployees.length === 0 && (
-                <div className="p-8 text-center">
-                  <UserIcon className="h-12 w-12 text-base-content/60 mx-auto mb-4" />
-                  <p className="text-base-content/60">No employees found</p>
+                <div className="p-6 sm:p-8 text-center">
+                  <UserIcon className="h-10 w-10 sm:h-12 sm:w-12 text-base-content/40 mx-auto mb-4" />
+                  <p className="text-base-content/60 text-sm sm:text-base">No employees found</p>
+                  <p className="text-base-content/40 text-xs sm:text-sm mt-1">Try adjusting your search or filter criteria</p>
                 </div>
               )}
             </div>

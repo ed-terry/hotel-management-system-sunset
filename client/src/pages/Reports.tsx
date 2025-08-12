@@ -38,6 +38,7 @@ import {
 } from '../graphql/queries';
 import { exportReport } from '../services/export';
 import { toast } from 'react-toastify';
+import { sampleAIResponses } from '../utils/sampleReports';
 
 import type {
   RevenueStatsResponse,
@@ -261,16 +262,35 @@ const Reports = () => {
   const handleAskAI = async () => {
     if (!aiQuery.trim()) return;
 
-    const mockResponse = {
-      id: Date.now(),
-      question: aiQuery,
-      answer: "Based on your current data, I recommend increasing weekend rates by 15% and implementing a Tuesday-Wednesday promotion package. Your occupancy patterns show strong weekend demand but midweek opportunities for improvement.",
-      timestamp: new Date().toLocaleTimeString(),
-    };
+    // Simulate AI processing delay
+    setIsGenerating(true);
+    
+    setTimeout(() => {
+      // Select a relevant response based on the query
+      let selectedResponse = sampleAIResponses[0]; // Default response
+      
+      const query = aiQuery.toLowerCase();
+      if (query.includes('occupancy') || query.includes('midweek')) {
+        selectedResponse = sampleAIResponses[0];
+      } else if (query.includes('room') || query.includes('profitable') || query.includes('revenue')) {
+        selectedResponse = sampleAIResponses[1];
+      } else if (query.includes('housekeeping') || query.includes('cleaning') || query.includes('performance')) {
+        selectedResponse = sampleAIResponses[2];
+      }
 
-    setAiResponses(prev => [...prev, mockResponse]);
-    setAiQuery('');
-    toast.success('AI analysis complete!');
+      const response = {
+        id: Date.now(),
+        question: aiQuery,
+        answer: selectedResponse.answer,
+        insights: selectedResponse.insights,
+        timestamp: new Date().toLocaleTimeString(),
+      };
+
+      setAiResponses(prev => [...prev, response]);
+      setAiQuery('');
+      setIsGenerating(false);
+      toast.success('AI analysis complete!');
+    }, 2000);
   };
 
   const occupancyRate = occupancyData?.occupancyStats 

@@ -5,6 +5,7 @@ import Bookings from '../pages/Bookings';
 import Rooms from '../pages/Rooms';
 import Housekeeping from '../pages/Housekeeping';
 import Guests from '../pages/Guests';
+import Employees from '../pages/Employees';
 import Reports from '../pages/Reports';
 import Settings from '../pages/Settings';
 import Analytics from '../pages/Analytics';
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
       {
         path: 'guests',
         element: <Guests />,
+      },
+      {
+        path: 'employees',
+        element: <Employees />,
       },
       {
         path: 'invoices',

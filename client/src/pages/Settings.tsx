@@ -6,6 +6,8 @@ import {
   ShieldCheckIcon,
   PaintBrushIcon,
   ServerIcon,
+  EnvelopeIcon,
+  WrenchScrewdriverIcon,
 } from '@heroicons/react/24/outline';
 import ThemePicker from '../components/ThemePicker';
 import UserActivityTracker from '../components/UserActivityTracker';
@@ -18,9 +20,33 @@ const Settings: React.FC = () => {
     sms: true,
   });
 
+  const [emailReporting, setEmailReporting] = useState({
+    enabled: true,
+    frequency: 'weekly',
+    recipients: ['admin@sunsethotel.com'],
+    includeAnalytics: true,
+    includeBookings: true,
+    includeRevenue: true,
+    time: '09:00',
+    dayOfWeek: 'monday',
+  });
+
+  const [hotelServices, setHotelServices] = useState({
+    roomService: { enabled: true, hours: '24/7', phone: '+1-555-ROOM' },
+    housekeeping: { enabled: true, hours: '08:00-20:00', requestDeadline: '16:00' },
+    concierge: { enabled: true, hours: '06:00-22:00', services: ['Transportation', 'Tours', 'Reservations'] },
+    spa: { enabled: true, hours: '09:00-21:00', phone: '+1-555-SPA1' },
+    gym: { enabled: true, hours: '24/7', accessType: 'keycard' },
+    pool: { enabled: true, hours: '06:00-22:00', lifeguardHours: '10:00-18:00' },
+    businessCenter: { enabled: true, hours: '24/7', services: ['Printing', 'Scanning', 'Computers'] },
+    parking: { enabled: true, type: 'valet', cost: 25, currency: 'USD' },
+  });
+
   const settingsSections = [
     { id: 'profile', name: 'Profile', icon: UserIcon },
     { id: 'notifications', name: 'Notifications', icon: BellIcon },
+    { id: 'reports', name: 'Email Reports', icon: EnvelopeIcon },
+    { id: 'services', name: 'Hotel Services', icon: WrenchScrewdriverIcon },
     { id: 'security', name: 'Security', icon: ShieldCheckIcon },
     { id: 'appearance', name: 'Appearance', icon: PaintBrushIcon },
     { id: 'system', name: 'System', icon: ServerIcon },
@@ -385,6 +411,415 @@ const Settings: React.FC = () => {
                           Update Password
                         </button>
                       </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeSection === 'reports' && (
+                <div>
+                  <h2 className="text-2xl font-bold text-base-content mb-6">Email Reports Settings</h2>
+                  <div className="space-y-6">
+                    <div className="bg-base-100 rounded-lg p-6 border border-base-300">
+                      <h3 className="text-lg font-semibold text-base-content mb-4">Automated Report Delivery</h3>
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h4 className="text-base font-medium text-base-content">Enable Email Reports</h4>
+                            <p className="text-base-content/70 text-sm">Automatically send periodic reports via email</p>
+                          </div>
+                          <button
+                            onClick={() => setEmailReporting(prev => ({ ...prev, enabled: !prev.enabled }))}
+                            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                              emailReporting.enabled ? 'bg-primary' : 'bg-base-300'
+                            }`}
+                          >
+                            <span
+                              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                                emailReporting.enabled ? 'translate-x-6' : 'translate-x-1'
+                              }`}
+                            />
+                          </button>
+                        </div>
+
+                        {emailReporting.enabled && (
+                          <div className="space-y-4 pt-4 border-t border-base-300">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div>
+                                <label className="block text-sm font-medium text-base-content/70 mb-2">
+                                  Report Frequency
+                                </label>
+                                <select
+                                  value={emailReporting.frequency}
+                                  onChange={(e) => setEmailReporting(prev => ({ ...prev, frequency: e.target.value }))}
+                                  className="w-full px-3 py-2 bg-base-200 border border-base-300 rounded-lg text-base-content focus:ring-2 focus:ring-primary focus:border-transparent"
+                                >
+                                  <option value="daily">Daily</option>
+                                  <option value="weekly">Weekly</option>
+                                  <option value="monthly">Monthly</option>
+                                  <option value="quarterly">Quarterly</option>
+                                </select>
+                              </div>
+
+                              <div>
+                                <label className="block text-sm font-medium text-base-content/70 mb-2">
+                                  Delivery Time
+                                </label>
+                                <input
+                                  type="time"
+                                  value={emailReporting.time}
+                                  onChange={(e) => setEmailReporting(prev => ({ ...prev, time: e.target.value }))}
+                                  className="w-full px-3 py-2 bg-base-200 border border-base-300 rounded-lg text-base-content focus:ring-2 focus:ring-primary focus:border-transparent"
+                                />
+                              </div>
+
+                              {emailReporting.frequency === 'weekly' && (
+                                <div>
+                                  <label className="block text-sm font-medium text-base-content/70 mb-2">
+                                    Day of Week
+                                  </label>
+                                  <select
+                                    value={emailReporting.dayOfWeek}
+                                    onChange={(e) => setEmailReporting(prev => ({ ...prev, dayOfWeek: e.target.value }))}
+                                    className="w-full px-3 py-2 bg-base-200 border border-base-300 rounded-lg text-base-content focus:ring-2 focus:ring-primary focus:border-transparent"
+                                  >
+                                    <option value="monday">Monday</option>
+                                    <option value="tuesday">Tuesday</option>
+                                    <option value="wednesday">Wednesday</option>
+                                    <option value="thursday">Thursday</option>
+                                    <option value="friday">Friday</option>
+                                    <option value="saturday">Saturday</option>
+                                    <option value="sunday">Sunday</option>
+                                  </select>
+                                </div>
+                              )}
+                            </div>
+
+                            <div>
+                              <label className="block text-sm font-medium text-base-content/70 mb-2">
+                                Report Recipients
+                              </label>
+                              <div className="space-y-2">
+                                {emailReporting.recipients.map((email, index) => (
+                                  <div key={index} className="flex items-center space-x-2">
+                                    <input
+                                      type="email"
+                                      value={email}
+                                      onChange={(e) => {
+                                        const newRecipients = [...emailReporting.recipients];
+                                        newRecipients[index] = e.target.value;
+                                        setEmailReporting(prev => ({ ...prev, recipients: newRecipients }));
+                                      }}
+                                      className="flex-1 px-3 py-2 bg-base-200 border border-base-300 rounded-lg text-base-content focus:ring-2 focus:ring-primary focus:border-transparent"
+                                    />
+                                    <button
+                                      onClick={() => {
+                                        const newRecipients = emailReporting.recipients.filter((_, i) => i !== index);
+                                        setEmailReporting(prev => ({ ...prev, recipients: newRecipients }));
+                                      }}
+                                      className="px-3 py-2 bg-error text-error-content rounded-lg hover:bg-error/90 transition-colors"
+                                    >
+                                      Remove
+                                    </button>
+                                  </div>
+                                ))}
+                                <button
+                                  onClick={() => {
+                                    setEmailReporting(prev => ({ 
+                                      ...prev, 
+                                      recipients: [...prev.recipients, ''] 
+                                    }));
+                                  }}
+                                  className="px-4 py-2 bg-primary text-primary-content rounded-lg hover:bg-primary/90 transition-colors"
+                                >
+                                  Add Recipient
+                                </button>
+                              </div>
+                            </div>
+
+                            <div>
+                              <h4 className="text-base font-medium text-base-content mb-3">Report Content</h4>
+                              <div className="space-y-3">
+                                <div className="flex items-center justify-between">
+                                  <span className="text-sm text-base-content/70">Include Analytics Data</span>
+                                  <button
+                                    onClick={() => setEmailReporting(prev => ({ ...prev, includeAnalytics: !prev.includeAnalytics }))}
+                                    className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
+                                      emailReporting.includeAnalytics ? 'bg-primary' : 'bg-base-300'
+                                    }`}
+                                  >
+                                    <span
+                                      className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform ${
+                                        emailReporting.includeAnalytics ? 'translate-x-5' : 'translate-x-1'
+                                      }`}
+                                    />
+                                  </button>
+                                </div>
+                                <div className="flex items-center justify-between">
+                                  <span className="text-sm text-base-content/70">Include Booking Summary</span>
+                                  <button
+                                    onClick={() => setEmailReporting(prev => ({ ...prev, includeBookings: !prev.includeBookings }))}
+                                    className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
+                                      emailReporting.includeBookings ? 'bg-primary' : 'bg-base-300'
+                                    }`}
+                                  >
+                                    <span
+                                      className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform ${
+                                        emailReporting.includeBookings ? 'translate-x-5' : 'translate-x-1'
+                                      }`}
+                                    />
+                                  </button>
+                                </div>
+                                <div className="flex items-center justify-between">
+                                  <span className="text-sm text-base-content/70">Include Revenue Report</span>
+                                  <button
+                                    onClick={() => setEmailReporting(prev => ({ ...prev, includeRevenue: !prev.includeRevenue }))}
+                                    className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
+                                      emailReporting.includeRevenue ? 'bg-primary' : 'bg-base-300'
+                                    }`}
+                                  >
+                                    <span
+                                      className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform ${
+                                        emailReporting.includeRevenue ? 'translate-x-5' : 'translate-x-1'
+                                      }`}
+                                    />
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="flex space-x-3">
+                      <button className="px-6 py-2 bg-primary hover:bg-primary/90 text-primary-content rounded-lg transition-colors">
+                        Save Settings
+                      </button>
+                      <button className="px-6 py-2 bg-secondary hover:bg-secondary/90 text-secondary-content rounded-lg transition-colors">
+                        Send Test Report
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeSection === 'services' && (
+                <div>
+                  <h2 className="text-2xl font-bold text-base-content mb-6">Hotel Services Configuration</h2>
+                  <div className="space-y-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                      {/* Room Service */}
+                      <div className="bg-base-100 rounded-lg p-6 border border-base-300">
+                        <div className="flex items-center justify-between mb-4">
+                          <h3 className="text-lg font-semibold text-base-content">Room Service</h3>
+                          <button
+                            onClick={() => setHotelServices(prev => ({ 
+                              ...prev, 
+                              roomService: { ...prev.roomService, enabled: !prev.roomService.enabled }
+                            }))}
+                            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                              hotelServices.roomService.enabled ? 'bg-primary' : 'bg-base-300'
+                            }`}
+                          >
+                            <span
+                              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                                hotelServices.roomService.enabled ? 'translate-x-6' : 'translate-x-1'
+                              }`}
+                            />
+                          </button>
+                        </div>
+                        {hotelServices.roomService.enabled && (
+                          <div className="space-y-3">
+                            <div>
+                              <label className="block text-sm font-medium text-base-content/70 mb-1">Operating Hours</label>
+                              <input
+                                type="text"
+                                value={hotelServices.roomService.hours}
+                                onChange={(e) => setHotelServices(prev => ({ 
+                                  ...prev, 
+                                  roomService: { ...prev.roomService, hours: e.target.value }
+                                }))}
+                                className="w-full px-3 py-2 bg-base-200 border border-base-300 rounded-lg text-base-content focus:ring-2 focus:ring-primary focus:border-transparent"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium text-base-content/70 mb-1">Contact Phone</label>
+                              <input
+                                type="text"
+                                value={hotelServices.roomService.phone}
+                                onChange={(e) => setHotelServices(prev => ({ 
+                                  ...prev, 
+                                  roomService: { ...prev.roomService, phone: e.target.value }
+                                }))}
+                                className="w-full px-3 py-2 bg-base-200 border border-base-300 rounded-lg text-base-content focus:ring-2 focus:ring-primary focus:border-transparent"
+                              />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Housekeeping */}
+                      <div className="bg-base-100 rounded-lg p-6 border border-base-300">
+                        <div className="flex items-center justify-between mb-4">
+                          <h3 className="text-lg font-semibold text-base-content">Housekeeping</h3>
+                          <button
+                            onClick={() => setHotelServices(prev => ({ 
+                              ...prev, 
+                              housekeeping: { ...prev.housekeeping, enabled: !prev.housekeeping.enabled }
+                            }))}
+                            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                              hotelServices.housekeeping.enabled ? 'bg-primary' : 'bg-base-300'
+                            }`}
+                          >
+                            <span
+                              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                                hotelServices.housekeeping.enabled ? 'translate-x-6' : 'translate-x-1'
+                              }`}
+                            />
+                          </button>
+                        </div>
+                        {hotelServices.housekeeping.enabled && (
+                          <div className="space-y-3">
+                            <div>
+                              <label className="block text-sm font-medium text-base-content/70 mb-1">Service Hours</label>
+                              <input
+                                type="text"
+                                value={hotelServices.housekeeping.hours}
+                                onChange={(e) => setHotelServices(prev => ({ 
+                                  ...prev, 
+                                  housekeeping: { ...prev.housekeeping, hours: e.target.value }
+                                }))}
+                                className="w-full px-3 py-2 bg-base-200 border border-base-300 rounded-lg text-base-content focus:ring-2 focus:ring-primary focus:border-transparent"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium text-base-content/70 mb-1">Request Deadline</label>
+                              <input
+                                type="text"
+                                value={hotelServices.housekeeping.requestDeadline}
+                                onChange={(e) => setHotelServices(prev => ({ 
+                                  ...prev, 
+                                  housekeeping: { ...prev.housekeeping, requestDeadline: e.target.value }
+                                }))}
+                                className="w-full px-3 py-2 bg-base-200 border border-base-300 rounded-lg text-base-content focus:ring-2 focus:ring-primary focus:border-transparent"
+                              />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Spa & Wellness */}
+                      <div className="bg-base-100 rounded-lg p-6 border border-base-300">
+                        <div className="flex items-center justify-between mb-4">
+                          <h3 className="text-lg font-semibold text-base-content">Spa & Wellness</h3>
+                          <button
+                            onClick={() => setHotelServices(prev => ({ 
+                              ...prev, 
+                              spa: { ...prev.spa, enabled: !prev.spa.enabled }
+                            }))}
+                            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                              hotelServices.spa.enabled ? 'bg-primary' : 'bg-base-300'
+                            }`}
+                          >
+                            <span
+                              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                                hotelServices.spa.enabled ? 'translate-x-6' : 'translate-x-1'
+                              }`}
+                            />
+                          </button>
+                        </div>
+                        {hotelServices.spa.enabled && (
+                          <div className="space-y-3">
+                            <div>
+                              <label className="block text-sm font-medium text-base-content/70 mb-1">Operating Hours</label>
+                              <input
+                                type="text"
+                                value={hotelServices.spa.hours}
+                                onChange={(e) => setHotelServices(prev => ({ 
+                                  ...prev, 
+                                  spa: { ...prev.spa, hours: e.target.value }
+                                }))}
+                                className="w-full px-3 py-2 bg-base-200 border border-base-300 rounded-lg text-base-content focus:ring-2 focus:ring-primary focus:border-transparent"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium text-base-content/70 mb-1">Contact Phone</label>
+                              <input
+                                type="text"
+                                value={hotelServices.spa.phone}
+                                onChange={(e) => setHotelServices(prev => ({ 
+                                  ...prev, 
+                                  spa: { ...prev.spa, phone: e.target.value }
+                                }))}
+                                className="w-full px-3 py-2 bg-base-200 border border-base-300 rounded-lg text-base-content focus:ring-2 focus:ring-primary focus:border-transparent"
+                              />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Gym & Fitness */}
+                      <div className="bg-base-100 rounded-lg p-6 border border-base-300">
+                        <div className="flex items-center justify-between mb-4">
+                          <h3 className="text-lg font-semibold text-base-content">Gym & Fitness</h3>
+                          <button
+                            onClick={() => setHotelServices(prev => ({ 
+                              ...prev, 
+                              gym: { ...prev.gym, enabled: !prev.gym.enabled }
+                            }))}
+                            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                              hotelServices.gym.enabled ? 'bg-primary' : 'bg-base-300'
+                            }`}
+                          >
+                            <span
+                              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                                hotelServices.gym.enabled ? 'translate-x-6' : 'translate-x-1'
+                              }`}
+                            />
+                          </button>
+                        </div>
+                        {hotelServices.gym.enabled && (
+                          <div className="space-y-3">
+                            <div>
+                              <label className="block text-sm font-medium text-base-content/70 mb-1">Operating Hours</label>
+                              <input
+                                type="text"
+                                value={hotelServices.gym.hours}
+                                onChange={(e) => setHotelServices(prev => ({ 
+                                  ...prev, 
+                                  gym: { ...prev.gym, hours: e.target.value }
+                                }))}
+                                className="w-full px-3 py-2 bg-base-200 border border-base-300 rounded-lg text-base-content focus:ring-2 focus:ring-primary focus:border-transparent"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium text-base-content/70 mb-1">Access Type</label>
+                              <select
+                                value={hotelServices.gym.accessType}
+                                onChange={(e) => setHotelServices(prev => ({ 
+                                  ...prev, 
+                                  gym: { ...prev.gym, accessType: e.target.value }
+                                }))}
+                                className="w-full px-3 py-2 bg-base-200 border border-base-300 rounded-lg text-base-content focus:ring-2 focus:ring-primary focus:border-transparent"
+                              >
+                                <option value="keycard">Keycard Access</option>
+                                <option value="code">Access Code</option>
+                                <option value="staff">Staff Assisted</option>
+                              </select>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="flex space-x-3">
+                      <button className="px-6 py-2 bg-primary hover:bg-primary/90 text-primary-content rounded-lg transition-colors">
+                        Save Configuration
+                      </button>
+                      <button className="px-6 py-2 bg-warning hover:bg-warning/90 text-warning-content rounded-lg transition-colors">
+                        Reset to Defaults
+                      </button>
                     </div>
                   </div>
                 </div>

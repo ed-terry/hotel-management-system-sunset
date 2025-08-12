@@ -22,7 +22,7 @@ import {
 } from 'chart.js';
 import { Bar, Line, Doughnut } from 'react-chartjs-2';
 import { GET_DASHBOARD_STATS_QUERY, REVENUE_STATS_QUERY } from '../graphql/queries';
-import { mockAnalyticsData } from '../utils/mockAnalytics';
+import { sampleAnalyticsData } from '../utils/sampleAnalytics';
 
 ChartJS.register(
   CategoryScale,
@@ -50,8 +50,8 @@ const Analytics: React.FC = () => {
     errorPolicy: 'all',
   });
 
-  // Use mock data as fallback or for development
-  const analytics = mockAnalyticsData;
+  // Use sample data as fallback or for development
+  const currentAnalytics = sampleAnalyticsData[timeRange as keyof typeof sampleAnalyticsData];
   const stats = dashboardData?.dashboardStats;
 
   const timeRangeOptions = [
@@ -63,13 +63,15 @@ const Analytics: React.FC = () => {
 
   // Revenue Chart Data
   const revenueChartData = {
-    labels: revenueData?.revenueStats?.map((stat: any) => stat.month) || analytics.revenue.labels,
+    labels: revenueData?.revenueStats?.map((stat: any) => stat.month) || 
+            currentAnalytics.revenueStats.map(stat => new Date(stat.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })),
     datasets: [
       {
         label: 'Revenue ($)',
-        data: revenueData?.revenueStats?.map((stat: any) => stat.revenue) || analytics.revenue.data,
-        backgroundColor: 'rgba(37, 99, 235, 0.1)',
-        borderColor: 'rgb(37, 99, 235)',
+        data: revenueData?.revenueStats?.map((stat: any) => stat.revenue) || 
+              currentAnalytics.revenueStats.map(stat => stat.revenue),
+        backgroundColor: 'rgba(217, 119, 6, 0.1)',
+        borderColor: 'rgb(217, 119, 6)',
         borderWidth: 3,
         fill: true,
         tension: 0.4,
@@ -77,24 +79,24 @@ const Analytics: React.FC = () => {
     ],
   };
 
-  // Occupancy Chart Data
+  // Occupancy Chart Data (using seasonal trends)
   const occupancyChartData = {
-    labels: analytics.occupancy.labels,
+    labels: currentAnalytics.seasonalTrends.map(trend => trend.month),
     datasets: [
       {
         label: 'Occupancy Rate (%)',
-        data: analytics.occupancy.data,
+        data: currentAnalytics.seasonalTrends.map(trend => trend.occupancy),
         backgroundColor: [
-          'rgba(16, 185, 129, 0.8)',
-          'rgba(37, 99, 235, 0.8)',
-          'rgba(245, 158, 11, 0.8)',
-          'rgba(239, 68, 68, 0.8)',
+          'rgba(217, 119, 6, 0.8)',
+          'rgba(5, 150, 105, 0.8)',
+          'rgba(220, 38, 38, 0.8)',
+          'rgba(217, 119, 6, 0.6)',
         ],
         borderColor: [
-          'rgb(16, 185, 129)',
-          'rgb(37, 99, 235)',
-          'rgb(245, 158, 11)',
-          'rgb(239, 68, 68)',
+          'rgb(217, 119, 6)',
+          'rgb(5, 150, 105)',
+          'rgb(220, 38, 38)',
+          'rgb(217, 119, 6)',
         ],
         borderWidth: 2,
       },
@@ -103,13 +105,13 @@ const Analytics: React.FC = () => {
 
   // Booking Trends Data
   const bookingTrendsData = {
-    labels: analytics.bookingTrends.labels,
+    labels: currentAnalytics.bookingStats.map(stat => new Date(stat.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })),
     datasets: [
       {
         label: 'Bookings',
-        data: analytics.bookingTrends.data,
-        backgroundColor: 'rgba(16, 185, 129, 0.6)',
-        borderColor: 'rgb(16, 185, 129)',
+        data: currentAnalytics.bookingStats.map(stat => stat.bookings),
+        backgroundColor: 'rgba(5, 150, 105, 0.6)',
+        borderColor: 'rgb(5, 150, 105)',
         borderWidth: 2,
       },
     ],
