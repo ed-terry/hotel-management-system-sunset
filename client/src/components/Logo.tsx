@@ -5,11 +5,11 @@ interface LogoProps {
 
 const Logo = ({ size = 32, className = "" }: LogoProps) => (
   <img
-    src="/sunset-hotel-logo-1.jpg"
+    src="/sunset-hotel-logo-2.jpg"
     alt="Sunset Hotel Management System"
     width={size}
     height={size}
-    className={`rounded-lg object-cover ${className}`}
+    className={`rounded-lg object-cover shadow-sm ${className}`}
   />
 );
 

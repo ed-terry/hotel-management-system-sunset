@@ -26,36 +26,36 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary via-accent to-secondary flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10 flex items-center justify-center p-4 relative overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-white/10 rounded-full blur-3xl animate-pulse animation-delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-ping animation-delay-2000"></div>
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-secondary/5 rounded-full blur-3xl animate-pulse animation-delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-ping animation-delay-2000"></div>
       </div>
 
       <div className="max-w-md w-full space-y-8 relative z-10">
         {/* Header */}
         <div className="text-center">
-          <div className="mx-auto h-24 w-24 bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-sm rounded-3xl flex items-center justify-center mb-6 shadow-2xl border border-white/20 hover:scale-105 transition-transform duration-300 p-2">
-            <Logo size={80} className="rounded-2xl shadow-xl" />
+          <div className="mx-auto h-28 w-28 bg-gradient-to-br from-primary/10 to-secondary/10 backdrop-blur-sm rounded-3xl flex items-center justify-center mb-6 shadow-xl border border-primary/20 hover:scale-105 transition-transform duration-300 p-3">
+            <Logo size={88} className="rounded-2xl shadow-lg" />
           </div>
-          <h2 className="text-4xl font-bold text-white mb-2 drop-shadow-lg">Sunset Hotel</h2>
-          <p className="text-white/80 text-lg font-medium">Management System</p>
-          <p className="mt-2 text-white/60">Sign in to your account</p>
+          <h2 className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-2">Sunset Hotel</h2>
+          <p className="text-base-content/70 text-lg font-medium">Management System</p>
+          <p className="mt-2 text-base-content/50">Sign in to your account</p>
         </div>
 
         {/* Login Form */}
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl shadow-2xl p-8 border border-white/20 hover:bg-white/15 transition-all duration-300">
+        <div className="bg-base-100/80 backdrop-blur-md rounded-2xl shadow-xl p-8 border border-primary/10 hover:shadow-2xl transition-all duration-300">
           <form className="space-y-6" onSubmit={handleSubmit}>
             {/* Email Field */}
             <div className="space-y-2">
-              <label htmlFor="email" className="block text-sm font-semibold text-white/90">
+              <label htmlFor="email" className="block text-sm font-semibold text-base-content/80">
                 Email Address
               </label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <UserIcon className="h-5 w-5 text-white/60 group-focus-within:text-white transition-colors duration-200" />
+                  <UserIcon className="h-5 w-5 text-base-content/40 group-focus-within:text-primary transition-colors duration-200" />
                 </div>
                 <input
                   id="email"
@@ -65,7 +65,7 @@ const Login: React.FC = () => {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/30 transition-all duration-200 backdrop-blur-sm hover:bg-white/15"
+                  className="w-full pl-12 pr-4 py-3.5 bg-base-200/50 border border-primary/20 rounded-xl text-base-content placeholder-base-content/40 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/40 transition-all duration-200 backdrop-blur-sm hover:bg-base-200/70"
                   placeholder="Enter your email"
                 />
               </div>
@@ -73,12 +73,12 @@ const Login: React.FC = () => {
 
             {/* Password Field */}
             <div className="space-y-2">
-              <label htmlFor="password" className="block text-sm font-semibold text-white/90">
+              <label htmlFor="password" className="block text-sm font-semibold text-base-content/80">
                 Password
               </label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <LockClosedIcon className="h-5 w-5 text-white/60 group-focus-within:text-white transition-colors duration-200" />
+                  <LockClosedIcon className="h-5 w-5 text-base-content/40 group-focus-within:text-primary transition-colors duration-200" />
                 </div>
                 <input
                   id="password"
@@ -88,7 +88,7 @@ const Login: React.FC = () => {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-12 pr-12 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/30 transition-all duration-200 backdrop-blur-sm hover:bg-white/15"
+                  className="w-full pl-12 pr-12 py-3.5 bg-base-200/50 border border-primary/20 rounded-xl text-base-content placeholder-base-content/40 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/40 transition-all duration-200 backdrop-blur-sm hover:bg-base-200/70"
                   placeholder="Enter your password"
                 />
                 <button
@@ -97,9 +97,9 @@ const Login: React.FC = () => {
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
-                    <EyeSlashIcon className="h-5 w-5 text-white/60 hover:text-white transition-colors duration-200" />
+                    <EyeSlashIcon className="h-5 w-5 text-base-content/40 hover:text-primary transition-colors duration-200" />
                   ) : (
-                    <EyeIcon className="h-5 w-5 text-white/60 hover:text-white transition-colors duration-200" />
+                    <EyeIcon className="h-5 w-5 text-base-content/40 hover:text-primary transition-colors duration-200" />
                   )}
                 </button>
               </div>
@@ -110,11 +110,11 @@ const Login: React.FC = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-xl text-primary bg-white hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"
+                className="group relative w-full flex justify-center py-3.5 px-4 border border-transparent text-sm font-semibold rounded-xl text-white bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"
               >
                 {isLoading ? (
                   <>
-                    <div className="animate-spin -ml-1 mr-3 h-5 w-5 border-2 border-primary border-t-transparent rounded-full"></div>
+                    <div className="animate-spin -ml-1 mr-3 h-5 w-5 border-2 border-white border-t-transparent rounded-full"></div>
                     Signing in...
                   </>
                 ) : (

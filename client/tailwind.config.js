@@ -13,12 +13,12 @@ export default {
     themes: [
       {
         dark: {
-          primary: "#f97316", // Sunset orange
-          secondary: "#dc2626", // Sunset red
-          accent: "#facc15", // Sunset yellow
-          neutral: "#111827",
-          "base-100": "#0f172a", // Dark navy background
-          "base-200": "#1e293b", // Cards background
+          primary: "#d97706", // Rich amber/golden
+          secondary: "#059669", // Emerald green (sophisticated)
+          accent: "#dc2626", // Deep red accent
+          neutral: "#1f2937",
+          "base-100": "#0f172a", // Deep navy background
+          "base-200": "#1e293b", // Slate cards background
           "base-300": "#334155", // Borders/dividers
           info: "#0ea5e9", // Sky blue
           success: "#10b981", // Emerald green
@@ -26,13 +26,13 @@ export default {
           error: "#ef4444", // Red
         },
         light: {
-          primary: "#f97316", // Sunset orange
-          secondary: "#dc2626", // Sunset red
-          accent: "#facc15", // Sunset yellow
+          primary: "#d97706", // Rich amber/golden
+          secondary: "#059669", // Emerald green (sophisticated)
+          accent: "#dc2626", // Deep red accent
           neutral: "#f8fafc",
-          "base-100": "#ffffff", // White background
-          "base-200": "#fef3f2", // Light warm cards
-          "base-300": "#fed7cc", // Light warm borders
+          "base-100": "#ffffff", // Pure white background
+          "base-200": "#f9fafb", // Very light gray cards
+          "base-300": "#e5e7eb", // Light gray borders
           info: "#0ea5e9", // Sky blue
           success: "#10b981", // Emerald green
           warning: "#f59e0b", // Amber

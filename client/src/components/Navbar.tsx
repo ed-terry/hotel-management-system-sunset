@@ -50,19 +50,23 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gradient-to-r from-base-200/95 via-base-300/90 to-base-200/95 backdrop-blur-md border-b border-primary/20 shadow-lg">
+    <nav className="bg-gradient-to-r from-base-100 via-base-200/50 to-base-100 backdrop-blur-md border-b border-primary/10 shadow-sm">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex h-18 items-center justify-between">
           <div className="flex items-center">
-            <div className="flex-shrink-0 flex items-center space-x-3">
-              <Logo size={40} className="shadow-lg" />
+            <div className="flex-shrink-0 flex items-center space-x-4">
+              <div className="p-1 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-xl border border-primary/10">
+                <Logo size={48} className="shadow-sm rounded-lg" />
+              </div>
               <div>
-                <h1 className="text-base-content text-xl font-bold">Sunset HMS</h1>
-                <p className="text-base-content/70 text-xs">Hotel Management</p>
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                  Sunset Hotel
+                </h1>
+                <p className="text-base-content/60 text-sm font-medium">Management System</p>
               </div>
             </div>
-            <div className="hidden md:block ml-10">
-              <div className="flex space-x-4">
+            <div className="hidden md:block ml-12">
+              <div className="flex space-x-2">
                 {navigation.map((item) => {
                   const Icon = item.icon;
                   return (
@@ -71,11 +75,11 @@ const Navbar = () => {
                       to={item.href}
                       className={`${
                         isActive(item.href)
-                          ? 'bg-primary text-primary-content'
-                          : 'text-base-content hover:bg-base-300 hover:text-primary'
-                      } px-3 py-2 rounded-md text-sm font-medium flex items-center space-x-2 transition-colors`}
+                          ? 'bg-gradient-to-r from-primary/10 to-secondary/10 text-primary border border-primary/20'
+                          : 'text-base-content/70 hover:bg-gradient-to-r hover:from-primary/5 hover:to-secondary/5 hover:text-primary border border-transparent hover:border-primary/10'
+                      } px-4 py-2.5 rounded-xl text-sm font-medium flex items-center space-x-2 transition-all duration-200 shadow-sm`}
                     >
-                      <Icon className="h-5 w-5" />
+                      <Icon className="h-4 w-4" />
                       <span>{item.name}</span>
                     </Link>
                   );
@@ -90,7 +94,7 @@ const Navbar = () => {
           </div>
 
           {/* Right side - Enhanced Notifications, Theme Toggle and User Menu */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-3">
             {/* Mobile Search Button - shows on tablet screens */}
             <div className="lg:hidden">
               <button
@@ -98,7 +102,7 @@ const Navbar = () => {
                   // In a real app, this would open a modal with search
                   console.log('Open mobile search');
                 }}
-                className="p-2 text-base-content hover:text-primary rounded-md transition-colors"
+                className="p-2.5 text-base-content/70 hover:text-primary hover:bg-primary/5 rounded-xl transition-all duration-200 border border-transparent hover:border-primary/10"
               >
                 <MagnifyingGlassIcon className="h-5 w-5" />
               </button>
@@ -111,7 +115,7 @@ const Navbar = () => {
             <div className="relative">
               <button
                 onClick={() => setShowUserMenu(!showUserMenu)}
-                className="flex items-center space-x-2 text-base-content hover:text-primary p-2 rounded-md transition-colors"
+                className="flex items-center space-x-3 text-base-content/70 hover:text-primary px-3 py-2 rounded-xl transition-all duration-200 hover:bg-primary/5 border border-transparent hover:border-primary/10"
               >
                 <UserCircleIcon className="h-6 w-6" />
                 <span className="text-sm font-medium">{user?.firstName} {user?.lastName}</span>
@@ -119,15 +123,15 @@ const Navbar = () => {
 
               {/* User Dropdown Menu */}
               {showUserMenu && (
-                <div className="absolute right-0 mt-2 w-48 bg-base-200 rounded-md shadow-lg border border-base-300 z-50">
+                <div className="absolute right-0 mt-2 w-52 bg-base-100 rounded-xl shadow-lg border border-primary/10 z-50 overflow-hidden">
                   <div className="py-1">
-                    <div className="px-4 py-2 border-b border-base-300">
-                      <p className="text-sm text-base-content">{user?.email}</p>
-                      <p className="text-xs text-base-content/70 capitalize">{user?.role.toLowerCase()}</p>
+                    <div className="px-4 py-3 border-b border-primary/10 bg-gradient-to-r from-primary/5 to-secondary/5">
+                      <p className="text-sm font-medium text-base-content">{user?.email}</p>
+                      <p className="text-xs text-base-content/60 capitalize font-medium">{user?.role.toLowerCase()}</p>
                     </div>
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left px-4 py-2 text-sm text-base-content hover:bg-base-300 hover:text-primary flex items-center space-x-2"
+                      className="w-full text-left px-4 py-3 text-sm text-base-content/70 hover:bg-gradient-to-r hover:from-primary/5 hover:to-secondary/5 hover:text-primary flex items-center space-x-2 transition-all duration-200"
                     >
                       <ArrowRightOnRectangleIcon className="h-4 w-4" />
                       <span>Sign Out</span>
@@ -141,7 +145,7 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-base-content hover:text-primary p-2"
+              className="text-base-content/70 hover:text-primary p-2.5 rounded-xl hover:bg-primary/5 transition-all duration-200 border border-transparent hover:border-primary/10"
             >
               {isOpen ? (
                 <XMarkIcon className="h-6 w-6" />

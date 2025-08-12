@@ -21,20 +21,20 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-base-100 via-base-200/50 to-primary/5">
+    <div className="min-h-screen bg-gradient-to-br from-base-100 via-primary/2 to-secondary/2">
       {/* Modern Header */}
-      <div className="relative bg-gradient-to-r from-primary/20 via-secondary/15 to-accent/10 backdrop-blur-sm border-b border-primary/20">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-secondary/5 opacity-30"></div>
-        <div className="relative container mx-auto px-6 py-8">
-          <div className="flex items-center space-x-4">
-            <div className="p-3 bg-primary/20 backdrop-blur-sm rounded-xl border border-primary/30">
-              <HomeIcon className="h-8 w-8 text-primary" />
+      <div className="relative bg-gradient-to-r from-primary/8 via-secondary/6 to-accent/4 backdrop-blur-sm border-b border-primary/10">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/2 to-secondary/2 opacity-30"></div>
+        <div className="relative container mx-auto px-6 py-10">
+          <div className="flex items-center space-x-6">
+            <div className="p-4 bg-gradient-to-br from-primary/10 to-secondary/10 backdrop-blur-sm rounded-xl border border-primary/20 shadow-lg">
+              <HomeIcon className="h-10 w-10 text-primary" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                 Sunset Hotel Dashboard
               </h1>
-              <p className="text-base-content/70 mt-1">Welcome to your Sunset Hotel management center</p>
+              <p className="text-base-content/60 mt-2 text-lg">Welcome to your Sunset Hotel management center</p>
             </div>
           </div>
         </div>
