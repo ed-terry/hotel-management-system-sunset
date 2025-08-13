@@ -181,7 +181,7 @@ const Guests = () => {
 
   const getVipStatusColor = (status: string) => {
     switch (status) {
-      case 'Platinum': return 'text-blue-400 bg-blue-900/20';
+      case 'Platinum': return 'text-amber-400 bg-amber-900/20';
       case 'Gold': return 'text-yellow-400 bg-yellow-900/20';
       case 'Silver': return 'text-gray-400 bg-gray-900/20';
       default: return 'text-gray-500 bg-gray-800/20';
@@ -190,8 +190,8 @@ const Guests = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'Confirmed': return 'text-blue-400 bg-blue-900/20';
-      case 'Checked In': return 'text-green-400 bg-green-900/20';
+      case 'Confirmed': return 'text-orange-400 bg-orange-900/20';
+      case 'Checked In': return 'text-orange-500 bg-red-900/20';
       case 'Checked Out': return 'text-gray-400 bg-gray-900/20';
       case 'Cancelled': return 'text-red-400 bg-red-900/20';
       default: return 'text-gray-500 bg-gray-800/20';

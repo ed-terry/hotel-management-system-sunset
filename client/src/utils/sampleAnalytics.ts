@@ -136,8 +136,7 @@ export const generateSampleAnalyticsData = (period: string): AnalyticsData => {
 };
 
 export const generateRealTimeUpdate = (currentData: AnalyticsData): Partial<AnalyticsData> => {
-    const revenueVariation = (Math.random() - 0.5) * 10000;
-    const bookingVariation = Math.floor((Math.random() - 0.5) * 10);
+    // Generate small variations for real-time feel
     const occupancyVariation = (Math.random() - 0.5) * 2;
 
     return {

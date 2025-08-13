@@ -75,7 +75,7 @@ const AppLoadingScreen: React.FC<AppLoadingScreenProps> = ({ onLoadingComplete }
             <Logo size={108} className="rounded-2xl shadow-xl drop-shadow-lg" />
           </div>
           <h1 className="text-4xl font-bold bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 bg-clip-text text-transparent mb-2 drop-shadow-sm">Sunset Hotel</h1>
-          <p className="text-gray-700/80 text-lg font-semibold tracking-wide drop-shadow-sm">Management System</p>
+          <p className="text-base-content/80 text-lg font-semibold tracking-wide drop-shadow-sm">Management System</p>
         </div>
 
         {/* Loading Animation */}
@@ -83,7 +83,7 @@ const AppLoadingScreen: React.FC<AppLoadingScreenProps> = ({ onLoadingComplete }
           {isComplete ? (
             <div className="flex flex-col items-center space-y-4">
               <div className="p-4 bg-gradient-to-br from-emerald-100/40 to-green-100/40 rounded-full backdrop-blur-md border border-emerald-300/40 shadow-xl ring-4 ring-emerald-400/20">
-                <CheckCircleIcon className="h-12 w-12 text-emerald-600 animate-pulse drop-shadow-lg" />
+                <CheckCircleIcon className="h-12 w-12 text-orange-600 animate-pulse drop-shadow-lg" />
               </div>
               <p className="text-gray-800 text-xl font-bold tracking-wide drop-shadow-sm">Welcome!</p>
             </div>

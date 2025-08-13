@@ -240,17 +240,17 @@ const UniversalSearch: React.FC = () => {
     const iconClass = "h-5 w-5";
     switch (type) {
       case 'room':
-        return <HomeIcon className={`${iconClass} text-blue-500`} />;
+        return <HomeIcon className={`${iconClass} text-orange-500`} />;
       case 'guest':
-        return <UserIcon className={`${iconClass} text-green-500`} />;
+        return <UserIcon className={`${iconClass} text-amber-500`} />;
       case 'booking':
-        return <DocumentIcon className={`${iconClass} text-purple-500`} />;
+        return <DocumentIcon className={`${iconClass} text-red-500`} />;
       case 'employee':
         return <UserIcon className={`${iconClass} text-orange-500`} />;
       case 'invoice':
         return <DocumentIcon className={`${iconClass} text-red-500`} />;
       case 'report':
-        return <DocumentIcon className={`${iconClass} text-indigo-500`} />;
+        return <DocumentIcon className={`${iconClass} text-orange-400`} />;
       default:
         return <DocumentIcon className={`${iconClass} text-gray-500`} />;
     }
@@ -258,12 +258,12 @@ const UniversalSearch: React.FC = () => {
 
   const getTypeBadge = (type: SearchResult['type']) => {
     const colors = {
-      room: 'bg-blue-100 text-blue-800',
-      guest: 'bg-green-100 text-green-800',
-      booking: 'bg-purple-100 text-purple-800',
+      room: 'bg-orange-100 text-orange-800',
+      guest: 'bg-amber-100 text-amber-800',
+      booking: 'bg-red-100 text-red-800',
       employee: 'bg-orange-100 text-orange-800',
       invoice: 'bg-red-100 text-red-800',
-      report: 'bg-indigo-100 text-indigo-800'
+      report: 'bg-amber-100 text-amber-800'
     };
 
     return (
@@ -384,7 +384,7 @@ const UniversalSearch: React.FC = () => {
                     onClick={() => handleResultClick(result)}
                     className={`w-full px-4 py-3 text-left hover:bg-gray-50 flex items-start space-x-3 border-l-4 transition-all ${
                       selectedIndex === index 
-                        ? 'bg-blue-50 border-blue-500' 
+                        ? 'bg-orange-50 border-orange-500' 
                         : 'border-transparent'
                     }`}
                   >

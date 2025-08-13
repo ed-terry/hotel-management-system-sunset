@@ -27,13 +27,13 @@ const RoomDetails: React.FC<RoomDetailsProps> = ({ room, isOpen, onClose }) => {
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case 'available':
-        return 'bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-700 border-emerald-300';
+        return 'bg-gradient-to-r from-orange-100 to-red-100 text-orange-700 border-orange-300';
       case 'occupied':
         return 'bg-gradient-to-r from-red-100 to-pink-100 text-red-700 border-red-300';
       case 'maintenance':
         return 'bg-gradient-to-r from-yellow-100 to-amber-100 text-yellow-700 border-yellow-300';
       case 'cleaning':
-        return 'bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-700 border-blue-300';
+        return 'bg-gradient-to-r from-amber-100 to-orange-100 text-amber-700 border-amber-300';
       default:
         return 'bg-gradient-to-r from-gray-100 to-slate-100 text-gray-700 border-gray-300';
     }
@@ -42,9 +42,9 @@ const RoomDetails: React.FC<RoomDetailsProps> = ({ room, isOpen, onClose }) => {
   const getBookingStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case 'confirmed':
-        return 'bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-700 border-blue-300';
+        return 'bg-gradient-to-r from-orange-100 to-amber-100 text-orange-700 border-orange-300';
       case 'checked_in':
-        return 'bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-700 border-emerald-300';
+        return 'bg-gradient-to-r from-orange-100 to-red-100 text-orange-700 border-orange-300';
       case 'checked_out':
         return 'bg-gradient-to-r from-gray-100 to-slate-100 text-gray-700 border-gray-300';
       case 'cancelled':
@@ -149,7 +149,7 @@ const RoomDetails: React.FC<RoomDetailsProps> = ({ room, isOpen, onClose }) => {
                     </span>
                   </div>
                   <div className="flex items-center text-sm text-gray-600 font-medium">
-                    <CalendarIcon className="h-4 w-4 mr-2 text-blue-500" />
+                    <CalendarIcon className="h-4 w-4 mr-2 text-orange-500" />
                     <span>
                       {formatDate(booking.checkIn)} - {formatDate(booking.checkOut)}
                     </span>

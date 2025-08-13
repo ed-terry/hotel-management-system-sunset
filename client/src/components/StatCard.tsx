@@ -22,7 +22,7 @@ const StatCard: React.FC<StatCardProps> = ({
   suffix = '',
   className = ''
 }) => {
-  const trendColor = trend === 'up' ? 'text-emerald-600' : 'text-red-600';
+  const trendColor = trend === 'up' ? 'text-orange-600' : 'text-red-600';
   const bgGradient = trend === 'up' 
     ? 'from-emerald-100/80 to-emerald-200/60' 
     : 'from-red-100/80 to-red-200/60';

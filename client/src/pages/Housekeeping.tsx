@@ -149,7 +149,7 @@ const Housekeeping = () => {
       case 'IN_PROGRESS':
         return 'text-yellow-400 bg-yellow-900/20';
       case 'COMPLETED':
-        return 'text-green-400 bg-green-900/20';
+        return 'text-orange-500 bg-orange-900/20';
       case 'CANCELLED':
         return 'text-red-400 bg-red-900/20';
       default:
@@ -166,7 +166,7 @@ const Housekeeping = () => {
       case 'MEDIUM':
         return 'text-yellow-400 bg-yellow-900/20';
       case 'LOW':
-        return 'text-green-400 bg-green-900/20';
+        return 'text-amber-400 bg-amber-900/20';
       default:
         return 'text-gray-400 bg-gray-900/20';
     }
@@ -376,7 +376,7 @@ const Housekeeping = () => {
                       <div className="text-gray-300 text-sm">
                         <div>Est: {formatTime(task.estimatedTime)}</div>
                         {task.actualTime && (
-                          <div className="text-green-400">Act: {formatTime(task.actualTime)}</div>
+                          <div className="text-orange-500">Act: {formatTime(task.actualTime)}</div>
                         )}
                       </div>
                     </td>
@@ -394,7 +394,7 @@ const Housekeeping = () => {
                         {(task.status === 'PENDING' || task.status === 'IN_PROGRESS') && (
                           <button
                             onClick={() => handleCompleteTask(task.id)}
-                            className="p-1 text-green-400 hover:text-green-300 transition-colors"
+                            className="p-1 text-orange-500 hover:text-orange-400 transition-colors"
                             title="Complete Task"
                           >
                             <CheckCircleIcon className="h-4 w-4" />
@@ -402,7 +402,7 @@ const Housekeeping = () => {
                         )}
                         <button
                           onClick={() => handleEditTask(task)}
-                          className="p-1 text-blue-400 hover:text-blue-300 transition-colors"
+                          className="p-1 text-orange-400 hover:text-orange-300 transition-colors"
                           title="Edit Task"
                         >
                           <ClockIcon className="h-4 w-4" />

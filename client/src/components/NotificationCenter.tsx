@@ -143,9 +143,9 @@ const NotificationCenter = () => {
       case 'warning':
         return <ExclamationTriangleIcon className="h-5 w-5 text-amber-500" />;
       case 'success':
-        return <CheckCircleIcon className="h-5 w-5 text-emerald-500" />;
+        return <CheckCircleIcon className="h-5 w-5 text-orange-500" />;
       default:
-        return <ClockIcon className="h-5 w-5 text-blue-500" />;
+        return <ClockIcon className="h-5 w-5 text-orange-400" />;
     }
   };
 
@@ -156,9 +156,9 @@ const NotificationCenter = () => {
       case 'warning':
         return 'border-l-amber-500 bg-gradient-to-r from-amber-50/80 to-yellow-50/60';
       case 'success':
-        return 'border-l-emerald-500 bg-gradient-to-r from-emerald-50/80 to-green-50/60';
+        return 'border-l-orange-500 bg-gradient-to-r from-orange-50/80 to-red-50/60';
       default:
-        return 'border-l-blue-500 bg-gradient-to-r from-blue-50/80 to-indigo-50/60';
+        return 'border-l-orange-400 bg-gradient-to-r from-orange-50/80 to-amber-50/60';
     }
   };
 
@@ -180,11 +180,11 @@ const NotificationCenter = () => {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="relative p-2 text-gray-600 hover:text-amber-600 transition-all duration-200 hover:bg-amber-50 rounded-lg group"
+        className="relative p-2 text-base-content/70 hover:text-orange-600 transition-all duration-200 hover:bg-orange-50 dark:hover:bg-orange-900/20 rounded-lg group"
       >
         <BellIcon className="h-6 w-6 group-hover:scale-110 transition-transform duration-200" />
         {unreadCount > 0 && (
-          <span className="absolute -top-1 -right-1 bg-gradient-to-r from-red-500 to-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center shadow-lg animate-pulse ring-2 ring-red-200">
+          <span className="absolute -top-1 -right-1 bg-gradient-to-r from-red-500 to-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center shadow-lg animate-pulse ring-2 ring-red-200 dark:ring-red-800">
             {unreadCount > 9 ? '9+' : unreadCount}
           </span>
         )}
@@ -199,25 +199,25 @@ const NotificationCenter = () => {
           ></div>
 
           {/* Notification Panel */}
-          <div className="absolute right-0 top-full mt-2 w-96 bg-gradient-to-br from-white via-amber-50/50 to-orange-50/30 backdrop-blur-md border-2 border-amber-200/50 rounded-xl shadow-2xl z-50 max-h-[32rem] overflow-hidden">
+          <div className="absolute right-0 top-full mt-2 w-96 bg-base-100 backdrop-blur-md border-2 border-orange-200/50 dark:border-orange-800/50 rounded-xl shadow-2xl z-50 max-h-[32rem] overflow-hidden">
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b-2 border-amber-200/50 bg-gradient-to-r from-amber-100/50 to-orange-100/30">
-              <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-                <BellIcon className="h-5 w-5 text-amber-600" />
+            <div className="flex items-center justify-between p-4 border-b-2 border-orange-200/50 dark:border-orange-800/50 bg-gradient-to-r from-orange-100/50 to-red-100/30 dark:from-orange-900/30 dark:to-red-900/20">
+              <h3 className="text-lg font-bold text-base-content flex items-center gap-2">
+                <BellIcon className="h-5 w-5 text-orange-600" />
                 Notifications
               </h3>
               <div className="flex items-center gap-2">
                 {unreadCount > 0 && (
                   <button
                     onClick={markAllAsRead}
-                    className="text-sm text-amber-600 hover:text-amber-700 font-medium transition-colors duration-200 px-2 py-1 rounded-lg hover:bg-amber-100"
+                    className="text-sm text-orange-600 hover:text-orange-700 font-medium transition-colors duration-200 px-2 py-1 rounded-lg hover:bg-orange-100 dark:hover:bg-orange-900/30"
                   >
                     Mark all read
                   </button>
                 )}
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="text-gray-400 hover:text-red-500 p-1 rounded-lg hover:bg-red-50 transition-all duration-200"
+                  className="text-base-content/50 hover:text-red-500 p-1 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/30 transition-all duration-200"
                 >
                   <XMarkIcon className="h-5 w-5" />
                 </button>
@@ -227,36 +227,36 @@ const NotificationCenter = () => {
             {/* Notifications List */}
             <div className="max-h-80 overflow-y-auto">
               {notifications.length === 0 ? (
-                <div className="p-6 text-center text-gray-500">
-                  <BellIcon className="h-12 w-12 mx-auto mb-3 opacity-50 text-amber-300" />
+                <div className="p-6 text-center text-base-content/50">
+                  <BellIcon className="h-12 w-12 mx-auto mb-3 opacity-50 text-orange-400" />
                   <p className="font-medium">No notifications</p>
                 </div>
               ) : (
-                <div className="divide-y divide-amber-200/30">
+                <div className="divide-y divide-orange-200/30 dark:divide-orange-800/30">
                   {notifications.map((notification) => (
                     <div
                       key={notification.id}
                       onClick={() => markAsRead(notification.id)}
-                      className={`p-4 cursor-pointer hover:bg-amber-50/80 transition-all duration-200 border-l-4 ${getNotificationColor(
+                      className={`p-4 cursor-pointer hover:bg-orange-50/80 dark:hover:bg-orange-900/20 transition-all duration-200 border-l-4 ${getNotificationColor(
                         notification.type
-                      )} ${!notification.read ? 'bg-amber-50/50 ring-2 ring-amber-200/50' : ''} transform hover:-translate-y-0.5 hover:shadow-lg`}
+                      )} ${!notification.read ? 'bg-orange-50/50 dark:bg-orange-900/30 ring-2 ring-orange-200/50 dark:ring-orange-800/50' : ''} transform hover:-translate-y-0.5 hover:shadow-lg`}
                     >
                       <div className="flex items-start gap-3">
-                        <div className="flex-shrink-0 mt-0.5 p-1 rounded-lg bg-white/80 shadow-md">
+                        <div className="flex-shrink-0 mt-0.5 p-1 rounded-lg bg-base-100/80 shadow-md">
                           {getNotificationIcon(notification.type)}
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between">
-                            <p className="text-sm font-bold text-gray-800 truncate">{notification.title}</p>
-                            <p className="text-xs text-gray-500 flex-shrink-0 ml-2 font-medium">
+                            <p className="text-sm font-bold text-base-content truncate">{notification.title}</p>
+                            <p className="text-xs text-base-content/60 flex-shrink-0 ml-2 font-medium">
                               {formatTimestamp(notification.timestamp)}
                             </p>
                           </div>
-                          <p className="text-sm text-gray-600 mt-1 font-medium">
+                          <p className="text-sm text-base-content/70 mt-1 font-medium">
                             {notification.message}
                           </p>
                           {!notification.read && (
-                            <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 animate-pulse shadow-lg"></div>
+                            <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 animate-pulse shadow-lg"></div>
                           )}
                         </div>
                       </div>

@@ -269,11 +269,11 @@ const Invoices = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'Paid': return 'text-green-400 bg-green-900/20';
-      case 'Sent': return 'text-blue-400 bg-blue-900/20';
-      case 'Draft': return 'text-gray-400 bg-gray-900/20';
-      case 'Overdue': return 'text-red-400 bg-red-900/20';
-      default: return 'text-gray-500 bg-gray-800/20';
+      case 'Paid': return 'text-orange-700 bg-gradient-to-r from-orange-100 to-red-100 border-orange-300';
+      case 'Sent': return 'text-amber-700 bg-gradient-to-r from-amber-100 to-orange-100 border-amber-300';
+      case 'Draft': return 'text-gray-700 bg-gradient-to-r from-gray-100 to-slate-100 border-gray-300';
+      case 'Overdue': return 'text-red-700 bg-gradient-to-r from-red-100 to-pink-100 border-red-300';
+      default: return 'text-gray-700 bg-gradient-to-r from-gray-100 to-slate-100 border-gray-300';
     }
   };
 
@@ -374,7 +374,7 @@ const Invoices = () => {
           <p>Payment is due within 14 days of invoice date.</p>
           <p>Please include invoice number {invoice.invoiceNumber} with your payment.</p>
           {invoice.status === 'Paid' && invoice.paidDate && (
-            <p className="text-green-600 font-medium mt-2">
+            <p className="text-orange-600 font-medium mt-2">
               ✓ Paid on {invoice.paidDate} via {invoice.paymentMethod}
             </p>
           )}
@@ -455,8 +455,8 @@ const Invoices = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
         <div className="bg-primary-light rounded-lg shadow-lg p-6">
           <div className="flex items-center space-x-3">
-            <div className="p-3 bg-blue-600/20 rounded-lg">
-              <DocumentTextIcon className="h-6 w-6 text-blue-400" />
+            <div className="p-3 bg-orange-600/20 rounded-lg">
+              <DocumentTextIcon className="h-6 w-6 text-orange-400" />
             </div>
             <div>
               <p className="text-gray-400 text-sm">Total Invoices</p>
@@ -467,8 +467,8 @@ const Invoices = () => {
 
         <div className="bg-primary-light rounded-lg shadow-lg p-6">
           <div className="flex items-center space-x-3">
-            <div className="p-3 bg-green-600/20 rounded-lg">
-              <CheckCircleIcon className="h-6 w-6 text-green-400" />
+            <div className="p-3 bg-orange-600/20 rounded-lg">
+              <CheckCircleIcon className="h-6 w-6 text-orange-500" />
             </div>
             <div>
               <p className="text-gray-400 text-sm">Paid Invoices</p>
@@ -550,7 +550,7 @@ const Invoices = () => {
                     {invoice.status === 'Draft' && (
                       <button
                         onClick={() => handleSendInvoice(invoice)}
-                        className="p-2 text-gray-400 hover:text-blue-400 transition-colors"
+                        className="p-2 text-gray-400 hover:text-orange-400 transition-colors"
                         title="Send Invoice"
                       >
                         <EnvelopeIcon className="h-4 w-4" />
@@ -560,7 +560,7 @@ const Invoices = () => {
                     {invoice.status === 'Sent' && (
                       <button
                         onClick={() => handleMarkAsPaid(invoice)}
-                        className="p-2 text-gray-400 hover:text-green-400 transition-colors"
+                        className="p-2 text-gray-400 hover:text-orange-500 transition-colors"
                         title="Mark as Paid"
                       >
                         <CheckCircleIcon className="h-4 w-4" />
@@ -870,7 +870,7 @@ const Invoices = () => {
                       }
                     }
                   }}
-                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors"
+                  className="px-4 py-2 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white rounded-md transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
                 >
                   Print
                 </button>

@@ -97,7 +97,7 @@ const PaymentSection = () => {
       
       {payments.length === 0 ? (
         <div className="text-center py-8">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <div className="text-success text-2xl">✅</div>
           </div>
           <p className="text-base-content/70 font-medium">All payments are up to date!</p>

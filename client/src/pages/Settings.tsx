@@ -839,11 +839,11 @@ const Settings: React.FC = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="bg-primary rounded-lg p-4">
                         <h3 className="text-lg font-medium text-base-content mb-2">Database Status</h3>
-                        <p className="text-green-400">Connected</p>
+                        <p className="text-orange-400">Connected</p>
                       </div>
                       <div className="bg-primary rounded-lg p-4">
                         <h3 className="text-lg font-medium text-base-content mb-2">Server Status</h3>
-                        <p className="text-green-400">Running</p>
+                        <p className="text-orange-400">Running</p>
                       </div>
                       <div className="bg-primary rounded-lg p-4">
                         <h3 className="text-lg font-medium text-base-content mb-2">Last Backup</h3>
@@ -855,13 +855,13 @@ const Settings: React.FC = () => {
                       </div>
                     </div>
                     <div className="flex space-x-4">
-                      <button className="px-6 py-2 bg-info hover:bg-info/90 text-base-content rounded-lg transition-colors">
+                      <button className="px-6 py-2 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white rounded-xl font-bold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                         Create Backup
                       </button>
-                      <button className="px-6 py-2 bg-yellow-600 hover:bg-yellow-700 text-base-content rounded-lg transition-colors">
+                      <button className="px-6 py-2 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-white rounded-xl font-bold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                         Export Data
                       </button>
-                      <button className="px-6 py-2 bg-success hover:bg-success/90 text-base-content rounded-lg transition-colors">
+                      <button className="px-6 py-2 bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white rounded-xl font-bold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                         Check Updates
                       </button>
                     </div>

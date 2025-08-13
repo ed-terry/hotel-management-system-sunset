@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   WrenchScrewdriverIcon,
@@ -19,11 +19,14 @@ import {
   CreateHousekeepingTaskResponse,
 } from '../types/graphql';
 
-const QuickActions = () => {
+// Enhanced QuickActions with performance optimizations
+const QuickActions: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [processingRooms, setProcessingRooms] = useState<Set<string>>(new Set());
   
-  const { data: roomsData } = useQuery<GetRoomsResponse>(GET_ROOMS_QUERY, {
+  const { data: roomsData, loading } = useQuery<GetRoomsResponse>(GET_ROOMS_QUERY, {
     errorPolicy: 'all',
+    pollInterval: 30000, // Auto-refresh every 30 seconds
   });
 
   const [updateRoomStatus] = useMutation<UpdateRoomStatusResponse>(
@@ -37,14 +40,27 @@ const QuickActions = () => {
     CREATE_HOUSEKEEPING_TASK_MUTATION,
     {
       refetchQueries: [{ query: GET_HOUSEKEEPING_TASKS_QUERY }],
+      errorPolicy: 'all',
     }
   );
 
-  const rooms = roomsData?.rooms || [];
-  const occupiedRooms = rooms.filter(room => room.status === 'OCCUPIED');
-  const availableRooms = rooms.filter(room => room.status === 'AVAILABLE');
+  // Memoized room filtering for better performance
+  const { rooms, occupiedRooms, availableRooms, maintenanceRooms } = useMemo(() => {
+    const allRooms = roomsData?.rooms || [];
+    return {
+      rooms: allRooms,
+      occupiedRooms: allRooms.filter(room => room.status === 'OCCUPIED'),
+      availableRooms: allRooms.filter(room => room.status === 'AVAILABLE'),
+      maintenanceRooms: allRooms.filter(room => room.status === 'MAINTENANCE'),
+    };
+  }, [roomsData?.rooms]);
 
-  const handleCheckOut = async (roomId: string) => {
+  // Enhanced checkout handler with optimistic UI updates
+  const handleCheckOut = useCallback(async (roomId: string) => {
+    if (processingRooms.has(roomId)) return; // Prevent double-clicks
+    
+    setProcessingRooms(prev => new Set(prev).add(roomId));
+    
     try {
       // Update room status to cleaning
       await updateRoomStatus({
@@ -68,10 +84,20 @@ const QuickActions = () => {
     } catch (error) {
       console.error('Error during checkout:', error);
       alert('Failed to process checkout');
+    } finally {
+      setProcessingRooms(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(roomId);
+        return newSet;
+      });
     }
-  };
+  }, [updateRoomStatus, createHousekeepingTask, processingRooms, setProcessingRooms]);
 
-  const handleQuickClean = async (roomId: string) => {
+  const handleQuickClean = useCallback(async (roomId: string) => {
+    if (processingRooms.has(roomId)) return;
+    
+    setProcessingRooms(prev => new Set(prev).add(roomId));
+    
     try {
       await createHousekeepingTask({
         variables: {
@@ -88,8 +114,14 @@ const QuickActions = () => {
     } catch (error) {
       console.error('Error creating cleaning task:', error);
       alert('Failed to create cleaning task');
+    } finally {
+      setProcessingRooms(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(roomId);
+        return newSet;
+      });
     }
-  };
+  }, [createHousekeepingTask, processingRooms, setProcessingRooms]);
 
   const handleMaintenance = async (roomId: string) => {
     try {

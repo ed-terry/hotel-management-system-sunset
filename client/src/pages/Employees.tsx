@@ -321,31 +321,31 @@ const Employees = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'Active': return 'text-green-400 bg-green-900/20';
-      case 'Inactive': return 'text-base-content/60 bg-base-300/20';
-      case 'On Leave': return 'text-yellow-400 bg-yellow-900/20';
-      case 'Terminated': return 'text-red-400 bg-red-900/20';
-      default: return 'text-base-content/60 bg-base-200/20';
+      case 'Active': return 'text-orange-700 bg-gradient-to-r from-orange-100 to-red-100 border-orange-300';
+      case 'Inactive': return 'text-gray-700 bg-gradient-to-r from-gray-100 to-slate-100 border-gray-300';
+      case 'On Leave': return 'text-amber-700 bg-gradient-to-r from-amber-100 to-yellow-100 border-amber-300';
+      case 'Terminated': return 'text-red-700 bg-gradient-to-r from-red-100 to-pink-100 border-red-300';
+      default: return 'text-gray-700 bg-gradient-to-r from-gray-100 to-slate-100 border-gray-300';
     }
   };
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'Urgent': return 'text-red-400 bg-red-900/20';
-      case 'High': return 'text-orange-400 bg-orange-900/20';
-      case 'Medium': return 'text-yellow-400 bg-yellow-900/20';
-      case 'Low': return 'text-green-400 bg-green-900/20';
-      default: return 'text-base-content/60 bg-base-200/20';
+      case 'Urgent': return 'text-red-700 bg-gradient-to-r from-red-100 to-pink-100 border-red-300';
+      case 'High': return 'text-orange-700 bg-gradient-to-r from-orange-100 to-amber-100 border-orange-300';
+      case 'Medium': return 'text-amber-700 bg-gradient-to-r from-amber-100 to-yellow-100 border-amber-300';
+      case 'Low': return 'text-amber-700 bg-gradient-to-r from-amber-100 to-yellow-100 border-amber-300';
+      default: return 'text-gray-700 bg-gradient-to-r from-gray-100 to-slate-100 border-gray-300';
     }
   };
 
   const getTaskStatusColor = (status: string) => {
     switch (status) {
-      case 'Completed': return 'text-green-400 bg-green-900/20';
-      case 'In Progress': return 'text-blue-400 bg-blue-900/20';
-      case 'Pending': return 'text-yellow-400 bg-yellow-900/20';
-      case 'Cancelled': return 'text-red-400 bg-red-900/20';
-      default: return 'text-base-content/60 bg-base-200/20';
+      case 'Completed': return 'text-orange-700 bg-gradient-to-r from-orange-100 to-red-100 border-orange-300';
+      case 'In Progress': return 'text-amber-700 bg-gradient-to-r from-amber-100 to-orange-100 border-amber-300';
+      case 'Pending': return 'text-amber-700 bg-gradient-to-r from-amber-100 to-yellow-100 border-amber-300';
+      case 'Cancelled': return 'text-red-700 bg-gradient-to-r from-red-100 to-pink-100 border-red-300';
+      default: return 'text-gray-700 bg-gradient-to-r from-gray-100 to-slate-100 border-gray-300';
     }
   };
 
@@ -609,11 +609,11 @@ const Employees = () => {
               </div>
 
               <div className="space-y-2">
-                <button className="w-full px-4 py-2 bg-secondary hover:bg-secondary/90 text-base-content rounded-md transition-colors flex items-center justify-center space-x-2">
+                <button className="w-full px-4 py-2 bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 hover:from-amber-600 hover:via-orange-600 hover:to-red-600 text-white rounded-xl font-bold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center space-x-2">
                   <DocumentTextIcon className="h-4 w-4" />
                   <span>Generate Report</span>
                 </button>
-                <button className="w-full px-4 py-2 border border-base-300 text-gray-300 hover:bg-gray-700 rounded-md transition-colors">
+                <button className="w-full px-4 py-2 border-2 border-amber-300 text-amber-700 hover:bg-amber-50 rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                   View Performance
                 </button>
               </div>

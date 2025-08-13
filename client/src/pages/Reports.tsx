@@ -65,17 +65,17 @@ const AIInsightCard = ({ insight }: { insight: any }) => {
     switch (impact.toLowerCase()) {
       case 'high': return 'bg-red-900/20 text-red-400 border-red-400/30';
       case 'medium': return 'bg-yellow-900/20 text-yellow-400 border-yellow-400/30';
-      case 'low': return 'bg-green-900/20 text-green-400 border-green-400/30';
+      case 'low': return 'bg-amber-900/20 text-amber-400 border-amber-400/30';
       default: return 'bg-gray-800/20 text-gray-400 border-gray-400/30';
     }
   };
 
   const getTrendIcon = (trend: string) => {
     switch (trend) {
-      case 'up': return <ArrowTrendingUpIcon className="h-4 w-4 text-green-400" />;
+      case 'up': return <ArrowTrendingUpIcon className="h-4 w-4 text-orange-500" />;
       case 'down': return <ArrowTrendingDownIcon className="h-4 w-4 text-red-400" />;
       case 'warning': return <ExclamationTriangleIcon className="h-4 w-4 text-yellow-400" />;
-      case 'success': return <CheckCircleIcon className="h-4 w-4 text-green-400" />;
+      case 'success': return <CheckCircleIcon className="h-4 w-4 text-orange-500" />;
       default: return <ClockIcon className="h-4 w-4 text-yellow-400" />;
     }
   };
@@ -415,27 +415,27 @@ const Reports = () => {
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-primary rounded-lg p-4">
                 <div className="flex items-center space-x-2 mb-2">
-                  <CurrencyDollarIcon className="h-5 w-5 text-green-400" />
+                  <CurrencyDollarIcon className="h-5 w-5 text-orange-500" />
                   <span className="text-gray-400 text-sm">Monthly Revenue</span>
                 </div>
                 <p className="text-2xl font-bold text-white">
                   ${(revenueData?.revenueStats?.[0]?.revenue || 71000).toLocaleString()}
                 </p>
-                <p className="text-green-400 text-sm">+15.3% vs last month</p>
+                <p className="text-orange-400 text-sm">+15.3% vs last month</p>
               </div>
               
               <div className="bg-primary rounded-lg p-4">
                 <div className="flex items-center space-x-2 mb-2">
-                  <BuildingOfficeIcon className="h-5 w-5 text-blue-400" />
+                  <BuildingOfficeIcon className="h-5 w-5 text-amber-500" />
                   <span className="text-gray-400 text-sm">Occupancy Rate</span>
                 </div>
                 <p className="text-2xl font-bold text-white">{occupancyRate}%</p>
-                <p className="text-blue-400 text-sm">+3.2% vs last month</p>
+                <p className="text-orange-400 text-sm">+3.2% vs last month</p>
               </div>
               
               <div className="bg-primary rounded-lg p-4">
                 <div className="flex items-center space-x-2 mb-2">
-                  <UserGroupIcon className="h-5 w-5 text-blue-400" />
+                  <UserGroupIcon className="h-5 w-5 text-red-500" />
                   <span className="text-gray-400 text-sm">Available Rooms</span>
                 </div>
                 <p className="text-2xl font-bold text-white">
@@ -443,7 +443,7 @@ const Reports = () => {
                     ? (occupancyData.occupancyStats.totalRooms - occupancyData.occupancyStats.occupiedRooms)
                     : '12'}
                 </p>
-                <p className="text-blue-400 text-sm">Ready for booking</p>
+                <p className="text-orange-400 text-sm">Ready for booking</p>
               </div>
               
               <div className="bg-primary rounded-lg p-4">
@@ -668,11 +668,11 @@ const Reports = () => {
                   <div className="space-y-2">
                     <div className="flex justify-between">
                       <span className="text-gray-300">Friday</span>
-                      <span className="text-green-400">96%</span>
+                      <span className="text-orange-400">96%</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-300">Saturday</span>
-                      <span className="text-green-400">94%</span>
+                      <span className="text-orange-400">94%</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-300">Sunday</span>
@@ -704,7 +704,7 @@ const Reports = () => {
                   <div className="space-y-2">
                     <div className="flex justify-between">
                       <span className="text-gray-300">Summer</span>
-                      <span className="text-green-400">High</span>
+                      <span className="text-orange-400">High</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-300">Winter</span>
@@ -712,7 +712,7 @@ const Reports = () => {
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-300">Spring/Fall</span>
-                      <span className="text-blue-400">Variable</span>
+                      <span className="text-amber-400">Variable</span>
                     </div>
                   </div>
                 </div>
@@ -733,17 +733,17 @@ const Reports = () => {
                     <div className="text-center">
                       <p className="text-gray-400 text-sm">Predicted Revenue</p>
                       <p className="text-2xl font-bold text-white">$82,500</p>
-                      <p className="text-green-400 text-sm">+16.2% vs current</p>
+                      <p className="text-orange-400 text-sm">+16.2% vs current</p>
                     </div>
                     <div className="text-center">
                       <p className="text-gray-400 text-sm">Expected Occupancy</p>
                       <p className="text-2xl font-bold text-white">89.3%</p>
-                      <p className="text-blue-400 text-sm">+4.1% vs current</p>
+                      <p className="text-orange-400 text-sm">+4.1% vs current</p>
                     </div>
                     <div className="text-center">
                       <p className="text-gray-400 text-sm">Booking Probability</p>
                       <p className="text-2xl font-bold text-white">94%</p>
-                      <p className="text-blue-400 text-sm">High confidence</p>
+                      <p className="text-orange-400 text-sm">High confidence</p>
                     </div>
                   </div>
                 </div>
@@ -753,14 +753,14 @@ const Reports = () => {
                     <h4 className="text-white font-semibold mb-3">Market Trends</h4>
                     <div className="space-y-3">
                       <div className="flex items-center space-x-3">
-                        <ArrowTrendingUpIcon className="h-5 w-5 text-green-400" />
+                        <ArrowTrendingUpIcon className="h-5 w-5 text-orange-500" />
                         <div>
                           <p className="text-white text-sm">Business travel increasing</p>
                           <p className="text-gray-400 text-xs">+23% corporate bookings expected</p>
                         </div>
                       </div>
                       <div className="flex items-center space-x-3">
-                        <ArrowTrendingUpIcon className="h-5 w-5 text-green-400" />
+                        <ArrowTrendingUpIcon className="h-5 w-5 text-orange-500" />
                         <div>
                           <p className="text-white text-sm">Weekend demand strong</p>
                           <p className="text-gray-400 text-xs">97% occupancy projected</p>
@@ -780,7 +780,7 @@ const Reports = () => {
                     <h4 className="text-white font-semibold mb-3">Risk Assessment</h4>
                     <div className="space-y-3">
                       <div className="flex items-center space-x-3">
-                        <CheckCircleIcon className="h-5 w-5 text-green-400" />
+                        <CheckCircleIcon className="h-5 w-5 text-orange-500" />
                         <div>
                           <p className="text-white text-sm">Low cancellation risk</p>
                           <p className="text-gray-400 text-xs">Historical pattern analysis</p>
@@ -794,7 +794,7 @@ const Reports = () => {
                         </div>
                       </div>
                       <div className="flex items-center space-x-3">
-                        <CalendarDaysIcon className="h-5 w-5 text-blue-400" />
+                        <CalendarDaysIcon className="h-5 w-5 text-amber-500" />
                         <div>
                           <p className="text-white text-sm">Seasonal adjustment due</p>
                           <p className="text-gray-400 text-xs">Spring rates optimization</p>
@@ -841,7 +841,7 @@ const Reports = () => {
                       </button>
                       <button
                         onClick={() => toast.success('Excel export initiated!')}
-                        className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md transition-colors"
+                        className="px-4 py-2 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white rounded-md transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
                       >
                         Excel Export
                       </button>
@@ -876,7 +876,7 @@ const Reports = () => {
 
                     <button
                       type="submit"
-                      className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors"
+                      className="w-full px-4 py-2 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white rounded-md transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
                     >
                       Schedule Report
                     </button>

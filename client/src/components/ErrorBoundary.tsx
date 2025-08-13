@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Component, ReactNode } from 'react';
+import { ExclamationTriangleIcon, ArrowPathIcon, BugAntIcon } from '@heroicons/react/24/outline';
 import { logger, LogContext } from '../utils/logger';
 
 interface Props {
-  children: React.ReactNode;
-  fallback?: React.ReactNode;
+  children: ReactNode;
+  fallback?: ReactNode;
   context?: LogContext;
 }
 
@@ -12,30 +13,35 @@ interface State {
   error: Error | null;
   errorInfo: React.ErrorInfo | null;
   errorId?: string;
+  retryCount: number;
 }
 
-export default class ErrorBoundary extends React.Component<Props, State> {
+// Enhanced Error Boundary with better UI and error recovery
+export default class ErrorBoundary extends Component<Props, State> {
+  private maxRetries = 3;
+
   constructor(props: Props) {
     super(props);
     this.state = {
       hasError: false,
       error: null,
-      errorInfo: null
+      errorInfo: null,
+      retryCount: 0,
     };
   }
 
-  static getDerivedStateFromError(error: Error) {
+  static getDerivedStateFromError(error: Error): Partial<State> {
     return { 
       hasError: true, 
       error,
-      errorId: Math.random().toString(36).substring(2, 15)
+      errorId: `error_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
     };
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     this.setState({ errorInfo });
 
-    // Modern error logging with structured context
+    // Enhanced error logging with more context
     logger.error(
       'React Error Boundary caught an error',
       error,
@@ -50,15 +56,21 @@ export default class ErrorBoundary extends React.Component<Props, State> {
           url: window.location.href,
           timestamp: new Date().toISOString(),
           errorBoundary: this.constructor.name,
+          retryCount: this.state.retryCount,
+          errorId: this.state.errorId,
         },
       }
     );
 
-    // Handle specific error types
+    // Handle specific error types with better context
     if (error.name === 'ChunkLoadError') {
       logger.warn('Chunk load error detected - possible new deployment', {
         component: 'ErrorBoundary',
         action: 'chunkLoadError',
+        metadata: { 
+          suggestedAction: 'refresh_page',
+          errorId: this.state.errorId,
+        },
       });
     }
     
@@ -66,12 +78,24 @@ export default class ErrorBoundary extends React.Component<Props, State> {
   }
 
   handleRetry = () => {
+    const newRetryCount = this.state.retryCount + 1;
+    
     logger.info('User attempted error recovery', {
       component: 'ErrorBoundary',
       action: 'retry',
-      metadata: { errorId: this.state.errorId },
+      metadata: { 
+        errorId: this.state.errorId,
+        retryCount: newRetryCount,
+        maxRetries: this.maxRetries,
+      },
     });
-    this.setState({ hasError: false, error: null, errorInfo: null });
+    
+    this.setState({ 
+      hasError: false, 
+      error: null, 
+      errorInfo: null,
+      retryCount: newRetryCount,
+    });
   };
 
   handleReportError = () => {
@@ -101,8 +125,8 @@ export default class ErrorBoundary extends React.Component<Props, State> {
         <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 flex items-center justify-center p-4">
           <div className="bg-gradient-to-br from-white via-amber-50/50 to-orange-50/30 rounded-2xl p-8 max-w-lg w-full text-center border-2 border-amber-200/50 shadow-2xl">
             <div className="mb-6">
-              <div className="w-16 h-16 bg-gradient-to-r from-red-400 to-pink-400 rounded-full mx-auto mb-4 flex items-center justify-center shadow-lg">
-                <span className="text-white text-2xl">⚠️</span>
+              <div className="w-16 h-16 bg-gradient-to-r from-red-400 to-orange-400 rounded-full mx-auto mb-4 flex items-center justify-center shadow-lg">
+                <ExclamationTriangleIcon className="w-8 h-8 text-white" />
               </div>
               <h2 className="text-2xl font-bold bg-gradient-to-r from-red-600 via-orange-600 to-amber-600 bg-clip-text text-transparent mb-2">
                 Oops! Something went wrong
@@ -123,20 +147,23 @@ export default class ErrorBoundary extends React.Component<Props, State> {
             <div className="space-y-3">
               <button
                 onClick={() => window.location.reload()}
-                className="w-full bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 hover:from-amber-600 hover:via-orange-600 hover:to-red-600 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                className="w-full bg-gradient-to-r from-orange-500 via-red-500 to-orange-600 hover:from-orange-600 hover:via-red-600 hover:to-orange-700 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
               >
+                <ArrowPathIcon className="w-5 h-5" />
                 Refresh Page
               </button>
               <button
                 onClick={this.handleRetry}
-                className="w-full border-2 border-amber-300 hover:border-amber-400 text-amber-700 hover:bg-amber-50 font-bold py-3 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                className="w-full border-2 border-orange-300 hover:border-orange-400 text-orange-700 hover:bg-orange-50 font-bold py-3 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
               >
+                <ArrowPathIcon className="w-5 h-5" />
                 Try Again
               </button>
               <button
                 onClick={this.handleReportError}
-                className="w-full bg-gradient-to-r from-yellow-400 to-amber-400 hover:from-yellow-500 hover:to-amber-500 text-yellow-900 font-bold py-3 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                className="w-full bg-gradient-to-r from-amber-400 to-orange-400 hover:from-amber-500 hover:to-orange-500 text-amber-900 font-bold py-3 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
               >
+                <BugAntIcon className="w-5 h-5" />
                 Report Issue
               </button>
               {import.meta.env.DEV && this.state.error && (
